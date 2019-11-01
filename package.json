@@ -1,0 +1,23 @@
+{
+  "name": "kitsune",
+  "version": "1.0.0",
+  "description": "Cool bot for Discord servers",
+  "main": "./src/index.js",
+  "scripts": {
+    "start": "node .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bot",
+    "kitsune",
+    "discord"
+  ],
+  "author": "Douglas Pinheiro Goulart",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "eslint": "^6.6.0",
+    "node-fetch": "^2.6.0"
+  }
+}
