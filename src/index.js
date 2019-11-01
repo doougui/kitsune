@@ -33,9 +33,16 @@ const init = () => {
 	}
 
 	const updateTopic = (member, channel) => {
+		const emoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
 		const qtMembers = member.guild.memberCount;
+		let emojiNum = '';
+
+		for (num of qtMembers.toString()) {
+			emojiNum += emoji[num];
+		}
+
 		channel.edit({
-			topic: `Atualmente há ${qtMembers} membros no servidor.`
+			topic: `Atualmente há ${emojiNum} membros no servidor.`
 		});
 	}
 
