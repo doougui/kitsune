@@ -1,13 +1,5 @@
 module.exports = {
-  name: 'clear',
-  description: 'Clean the chat.',
-  guildOnly: true,
-  prefix: true,
-  args: true,
-  usage: '<número de mensagens a serem excluídas>',
-  cooldown: 5,
-  aliases: ['limpar'],
-  async execute(message, args) {
+  async execute(client, message, args) {
     if (!args.length) {
       return message.reply('você não especificou o número de mensagens.');
     }
@@ -29,5 +21,18 @@ module.exports = {
             .then(botMsg => botMsg.delete(3000)))
           .catch(err => message.channel.send(`Não foi possível deletar as mensagens deste canal! Erro: ${err}`));
       });
+  },
+
+  get cmdInfo() {
+    return {
+      name: 'clear',
+      description: 'Clean the chat.',
+      guildOnly: true,
+      prefix: true,
+      args: true,
+      usage: '<número de mensagens a serem excluídas>',
+      cooldown: 5,
+      aliases: ['limpar'],
+    };
   }
 }
