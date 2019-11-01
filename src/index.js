@@ -1,7 +1,6 @@
 require('dotenv/config');
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('../config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -25,7 +24,7 @@ client.on('message', message => {
 	if (message.author.bot) return;
 	
 	// Getting args and command name
-	const args = message.content.slice(prefix.length).split(/ +/);
+	const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
 	const commandName = args.shift().toLowerCase();
 	
 	// Get command
@@ -35,7 +34,7 @@ client.on('message', message => {
 	if (!command) return;
 
 	// If command needs a prefix to be executed and the author didn't provide one, end execution
-	if (command.prefix && !message.content.startsWith(prefix)) return;
+	if (command.prefix && !message.content.startsWith(process.env.PREFIX)) return;
 
 	// Check if command is 'server only' (can't be executed inside DMs)
 	if (command.guildOnly && message.channel.type !== 'text') {
@@ -47,11 +46,11 @@ client.on('message', message => {
 		let reply = (!command.reply) ? `Você não especificou nenhum parâmetro, ${message.author}.` : command.reply;
 
 		if (command.usage) {
-			reply += `\nA maneira de uso correta seria: \`${prefix}${command.name} ${command.usage}\`.`;
+			reply += `\nA maneira de uso correta seria: \`${process.env.PREFIX}${command.name} ${command.usage}\`.`;
 		}
 
 		if (command.aliases) {
-			reply += `\nAlém de \`${prefix}${command.name}\`, você também pode usar: \`${prefix}${command.aliases.join(', ')}\`.`;
+			reply += `\nAlém de \`${process.env.PREFIX}${command.name}\`, você também pode usar: \`${process.env.PREFIX}${command.aliases.join(', ')}\`.`;
 		}
 
 		return message.channel.send(reply);
@@ -71,7 +70,7 @@ client.on('message', message => {
 
 		if (now < expirationTime) {
 			const timeLeft = (expirationTime - now) / 1000;
-			return message.channel.send(`Por favor, espere ${timeLeft.toFixed(1)} segundo(s) antes de usar o comando \`${prefix}${command.name}\` novamente ${message.author}.`);
+			return message.channel.send(`Por favor, espere ${timeLeft.toFixed(1)} segundo(s) antes de usar o comando \`${process.env.PREFIX}${command.name}\` novamente ${message.author}.`);
 		}
 	}
 

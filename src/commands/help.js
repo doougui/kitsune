@@ -1,5 +1,5 @@
+require('dotenv/config')
 const Discord = require('discord.js');
-const { prefix } = require('../../config.json');
 
 module.exports = {
   name: 'help',
@@ -23,7 +23,7 @@ module.exports = {
         .setFooter('Kitsune', 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
 
       for (commandInfo of commandList) {
-        helpEmbed.addField(`${prefix}${commandInfo.name}`, `**Função**: ${commandInfo.description}`);
+        helpEmbed.addField(`${process.env.PREFIX}${commandInfo.name}`, `**Função**: ${commandInfo.description}`);
       }
 
       return message.author.send(helpEmbed)
@@ -39,8 +39,8 @@ module.exports = {
       const name = args[0].toLowerCase();
       const commandInfo = commands.get(name) || commands.find(cmd => cmd.aliases && cmd.aliases.includes(name));
 
-      if (name.startsWith(prefix)) {
-        return message.reply(`utilize $help <comando> (sem o prefixo (${prefix})).`);
+      if (name.startsWith(process.env.PREFIX)) {
+        return message.reply(`utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`);
       }
 
       if (!commandInfo) {
@@ -49,14 +49,14 @@ module.exports = {
 
       const helpEmbed = new Discord.RichEmbed()
         .setColor('#a50008')
-        .setTitle(`\`${prefix}${commandInfo.name}\``)
-        .setDescription(`Informações sobre o comando \`${prefix}${commandInfo.name}\`:`)
+        .setTitle(`\`${process.env.PREFIX}${commandInfo.name}\``)
+        .setDescription(`Informações sobre o comando \`${process.env.PREFIX}${commandInfo.name}\`:`)
         .setTimestamp()
         .setFooter(`Comando solicitado por: ${message.author.username}`, 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
 
       if (commandInfo.aliases) helpEmbed.addField(`Alternativas`, commandInfo.aliases.join(', '));
       if (commandInfo.description) helpEmbed.addField(`Descrição`, commandInfo.description);
-      if (commandInfo.usage) helpEmbed.addField(`Uso`, `${prefix}${commandInfo.name} ${commandInfo.usage}`);
+      if (commandInfo.usage) helpEmbed.addField(`Uso`, `${process.env.PREFIX}${commandInfo.name} ${commandInfo.usage}`);
 
       helpEmbed.addField(`Tempo de espera`, `${commandInfo.cooldown || 3} segundos`);
 
