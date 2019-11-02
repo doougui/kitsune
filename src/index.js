@@ -31,45 +31,6 @@ const init = async () => {
 		client.on(eventName, event.bind(null, client));
 	});
 
-	const getChannel = (member) => {
-		const channel = member.guild.channels.find(ch => ch.id === process.env.WELCOME_CHAT);
-		if (!channel) return;
-
-		return channel;
-	}
-
-	const updateTopic = (member, channel) => {
-		const emoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
-		const qtMembers = member.guild.memberCount;
-		let emojiNum = '';
-
-		for (num of qtMembers.toString()) {
-			emojiNum += emoji[num];
-		}
-
-		channel.edit({
-			topic: `Atualmente há ${emojiNum} membros no servidor.`
-		});
-	}
-
-	client.once('ready', () => {
-		client.logger.ready(`Bot\'s ready. Running with ${client.users.size - 1} users in ${client.guilds.size} servers.`);
-	});
-
-	client.on('guildMemberAdd', member => {
-		const channel = getChannel(member);
-		channel.send(`Bem-vindo ao servidor, ${member}.`);
-
-		updateTopic(member, channel);
-	});
-
-	client.on('guildMemberRemove', member => {
-		const channel = getChannel(member);
-		channel.send(`${member} saiu do servidor.`);
-
-		updateTopic(member, channel);
-	});
-
 	client.login(process.env.TOKEN);
 }
 

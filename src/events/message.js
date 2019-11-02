@@ -2,7 +2,6 @@ require('dotenv/config');
 const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
-
 module.exports = async (client, message) => {
   client.logger = require("../modules/Logger");
 
@@ -74,7 +73,7 @@ module.exports = async (client, message) => {
   
   // Execute command
   try {
-    command.execute(client, message, args)
+    command.execute(client, message, args);
   } catch (error) {
     console.error('[#ERROR]', error);
     message.reply('não foi possível executar este comando!');
