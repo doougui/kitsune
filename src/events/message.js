@@ -69,13 +69,12 @@ module.exports = async (client, message) => {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-
   
   // Execute command
   try {
     command.execute(client, message, args);
   } catch (error) {
-    console.error('[#ERROR]', error);
+    client.logger.error(error);
     message.reply('não foi possível executar este comando!');
   }
 }
