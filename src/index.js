@@ -1,23 +1,29 @@
+if (Number(process.version.slice(1).split(".")[0]) < 8) throw new Error("Node 8.0.0 or higher is required. Update Node on your system.");
+
 require('dotenv/config');
 const fs = require('fs');
 const Discord = require('discord.js');
-
 const client = new Discord.Client();
+
 client.commands = new Discord.Collection();
+client.logger = require("./modules/Logger");
 
-const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
-const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
-
-const init = () => {
+const init = async () => {
 	// Load command files
+	const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
+	
+	client.logger.log(`Loading a total of ${commandFiles.length} commands.`);
 	commandFiles.forEach(file => {
 		const command = require(`./commands/${file}`);
 		const commandName = file.split(".")[0];
-
+		
 		client.commands.set(commandName, command);
 	})
-
+	
 	// Load event files
+	const eventFiles = fs.readdirSync('./src/events').filter(file => file.endsWith('.js'));
+
+	client.logger.log(`Loading a total of ${eventFiles.length} events.`);
 	eventFiles.forEach(file => {
 		const eventName = file.split('.')[0];
 		const event = require(`./events/${file}`);
@@ -47,7 +53,7 @@ const init = () => {
 	}
 
 	client.once('ready', () => {
-		console.log('[#LOG]', `Bot\'s ready. Running with ${client.users.size - 1} user${((client.users.size - 1) > 1) ? 's' : ''} in ${client.guilds.size} server${(client.guilds.size > 1) ? 's' : ''}.`);
+		client.logger.ready(`Bot\'s ready. Running with ${client.users.size - 1} users in ${client.guilds.size} servers.`);
 	});
 
 	client.on('guildMemberAdd', member => {

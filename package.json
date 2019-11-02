@@ -19,9 +19,11 @@
   "author": "Douglas Pinheiro Goulart",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.2",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "eslint": "^6.6.0",
+    "moment": "^2.24.0",
     "node-fetch": "^2.6.0"
   }
 }

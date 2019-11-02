@@ -2,7 +2,10 @@ require('dotenv/config');
 const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
+
 module.exports = async (client, message) => {
+  client.logger = require("../modules/Logger");
+
   // If message author is a bot, end execution
   if (message.author.bot) return;
   
@@ -14,13 +17,15 @@ module.exports = async (client, message) => {
   // Getting args and command name
   const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
-
+  
   // Get command
   const command = client.commands.get(commandName) ||
-    client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
+  client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
   if (!command) return;
-
+  
   const cmdInfo = command.cmdInfo;
+
+  client.logger.log(`${message.author.username} (${message.author.id}) executed the command: ${cmdInfo.name}`);
 
   // If command needs a prefix to be executed and the author didn't provide one, end execution
   if (cmdInfo.prefix && !message.content.startsWith(process.env.PREFIX)) return;
@@ -66,13 +71,8 @@ module.exports = async (client, message) => {
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
 
+  
   // Execute command
-  console.log(
-    '[#LOG]',
-    `${message.author.username} (${
-    message.author.id
-  }) executou o comando: ${cmdInfo.name}`
-  );
   try {
     command.execute(client, message, args)
   } catch (error) {
