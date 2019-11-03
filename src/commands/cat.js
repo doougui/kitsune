@@ -1,13 +1,17 @@
+const Discord = require('discord.js');
 const fetch = require('node-fetch');
 
 module.exports = {
   async execute(client, message, args) {
-    catMsg = ['Gatinho :3', 'Mew', 'Miau', ':3', '🐱'];
-
+    const cats = ['😺', '😸', '😹', '😻', '😼', '😽', '🙀', '😿', '🐱', '🐈', '🐱‍👓', '🐱‍💻', '🐱‍🚀', '🐱‍🐉', '🐱‍👤'];
     const { file } = await fetch('https://aws.random.cat/meow')
       .then(response => response.json());
 
-    message.channel.send(`${catMsg[Math.floor(Math.random() * catMsg.length)]}\n${file}`);
+    catEmbed = new Discord.RichEmbed()
+      .setTitle(`${cats[Math.floor(Math.random() * cats.length)]}`)
+      .setImage(file);
+
+    message.channel.send(catEmbed);
   },
 
   get cmdInfo() {

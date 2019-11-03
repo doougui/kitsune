@@ -1,15 +1,29 @@
+const Discord = require('discord.js');
+
 module.exports = {
 	async execute(client, message, args) {
+		avatarEmbed = new Discord.RichEmbed()
+			.setColor('#a50008');
+
 		if (!message.mentions.users.size) {
-			return message.channel.send(`Seu icon: ${message.author.displayAvatarURL}`);
+			avatarEmbed
+				.setTitle('👤 >> Seu avatar')
+				.setImage(message.author.displayAvatarURL);
+
+			return message.channel.send(avatarEmbed);
 		}
+		
+		if (message.mentions.users.size <= 3) {
+			message.mentions.users.map(user => {
+				avatarEmbed
+					.setTitle(`👥 >> Avatar de ${user.username}`)
+					.setImage(user.displayAvatarURL)
 
-		const avatarList = message.mentions.users.map(user => {
-			return `Icon de ${user.username}: ${user.displayAvatarURL}`;
-		});
-
-		message.delete();
-		message.channel.send(avatarList);
+				return message.channel.send(avatarEmbed);
+			});
+		} else {
+			return message.reply('você pode pegar o avatar de apenas três usuários por vez.');
+		}
 	},
 
 	get cmdInfo() {

@@ -1,4 +1,4 @@
-odule.exports = {
+module.exports = {
   validate(client, message) {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) {
       message.reply('você não tem permissão para executar este comando!');
