@@ -13,6 +13,17 @@ module.exports = async (client, message) => {
     message.react('❌');
   }
 
+  if (message.content.toLowerCase() === 'bom dia') {
+    message.react('🌅');
+    message.channel.send('dia!');
+  } else if (message.content.toLowerCase() === 'boa tarde') {
+    message.react('🌞');
+    message.channel.send('tarde!');
+  } else if (message.content.toLowerCase() === 'boa noite') {
+    message.react('💤');
+    message.channel.send('noite!');
+  }
+
   // Getting args and command name
   const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
@@ -26,8 +37,8 @@ module.exports = async (client, message) => {
 
   client.logger.log(`${message.author.username} (${message.author.id}) executed the command: ${cmdInfo.name}`);
 
-  // If command needs a prefix to be executed and the author didn't provide one, end execution
-  if (cmdInfo.prefix && !message.content.startsWith(process.env.PREFIX)) return;
+/*   // If command needs a prefix to be executed and the author didn't provide one, end execution
+  if (cmdInfo.prefix && !message.content.startsWith(process.env.PREFIX)) return; */
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {

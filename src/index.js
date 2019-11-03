@@ -8,7 +8,7 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 client.logger = require("./modules/Logger");
 
-const init = async () => {
+const init = () => {
 	// Load command files
 	const commandFiles = fs.readdirSync('./src/commands').filter(file => file.endsWith('.js'));
 	
