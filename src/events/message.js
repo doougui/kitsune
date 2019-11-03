@@ -35,14 +35,14 @@ module.exports = async (client, message) => {
   
   const cmdInfo = command.cmdInfo;
 
-  client.logger.log(`${message.author.username} (${message.author.id}) executed the command: ${cmdInfo.name}`);
+  // If command needs a prefix to be executed and the author didn't provide one, end execution
+  if (!message.content.startsWith(process.env.PREFIX)) return;
 
-/*   // If command needs a prefix to be executed and the author didn't provide one, end execution
-  if (cmdInfo.prefix && !message.content.startsWith(process.env.PREFIX)) return; */
+  client.logger.log(`${message.author.username} (${message.author.id}) executed the command ${cmdInfo.name}`);
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {
-    return message.reply('Este comando só pode ser executado em servidores.');
+    return message.reply('este comando só pode ser executado em servidores.');
   }
 
   // If command needs arguments to be executed, send a error reply message in the chat
@@ -83,9 +83,11 @@ module.exports = async (client, message) => {
   
   // Execute command
   try {
+    if (command.validate) {
+			command.validate(client, message, args);
+    }    
     command.execute(client, message, args);
   } catch (error) {
     client.logger.error(error);
-    message.reply('não foi possível executar este comando!');
   }
 }

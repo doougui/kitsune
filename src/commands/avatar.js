@@ -17,8 +17,8 @@ module.exports = {
 			name: 'avatar',
 			description: 'Show user\'s avatar.',
 			guildOnly: false,
-			prefix: true,
 			args: false,
+			usage: '<opcional: [usuário]>'
 		};
 	},
 };

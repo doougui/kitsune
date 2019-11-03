@@ -14,7 +14,7 @@ module.exports = {
     return {
       name: 'cat',
       description: 'Shows a random cat picture.',
-      prefix: true,
+      args: false,
       cooldown: 5,
       aliases: ['miau', 'meow', 'gato', 'gatinho'],
     };
