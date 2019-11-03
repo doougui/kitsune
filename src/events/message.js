@@ -3,11 +3,11 @@ const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
 module.exports = async (client, message) => {
-  client.logger = require("../modules/Logger");
+  client.logger = require('../modules/Logger');
 
   // If message author is a bot, end execution
   if (message.author.bot) return;
-  
+
   if (message.channel.id === process.env.SUGGESTION_CHAT) {
     message.react('✅');
     message.react('❌');
@@ -27,12 +27,12 @@ module.exports = async (client, message) => {
   // Getting args and command name
   const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
   const commandName = args.shift().toLowerCase();
-  
+
   // Get command
   const command = client.commands.get(commandName) ||
   client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
   if (!command) return;
-  
+
   const cmdInfo = command.cmdInfo;
 
   // If the message author didn't provide the prefix, end execution
@@ -80,14 +80,14 @@ module.exports = async (client, message) => {
 
   timestamps.set(message.author.id, now);
   setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  
+
   // Execute command
   try {
     if (command.validate) {
-			command.validate(client, message, args);
-    }    
+      await command.validate(client, message, args);
+    }
     command.execute(client, message, args);
   } catch (error) {
     client.logger.error(error);
   }
-}
+};
