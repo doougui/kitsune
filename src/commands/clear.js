@@ -35,7 +35,7 @@ module.exports = {
       name: 'clear',
       description: 'Clean the chat.',
       guildOnly: true,
-      args: true,
+      requireArgs: true,
       usage: '<número de mensagens a serem excluídas>',
       cooldown: 5,
       aliases: ['limpar'],

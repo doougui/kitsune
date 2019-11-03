@@ -69,8 +69,10 @@ module.exports = {
     return {
       name: 'help',
       description: 'Show available commands.',
-      aliases: ['commands', 'ajuda', 'comandos'],
+      guildOnly: false,
+      requireArgs: false,
       usage: '<opcional: [nome do comando]>',
+      aliases: ['commands', 'ajuda', 'comandos'],
     };
   }
 }

@@ -35,10 +35,10 @@ module.exports = async (client, message) => {
   
   const cmdInfo = command.cmdInfo;
 
-  // If command needs a prefix to be executed and the author didn't provide one, end execution
+  // If the message author didn't provide the prefix, end execution
   if (!message.content.startsWith(process.env.PREFIX)) return;
 
-  client.logger.log(`${message.author.username} (${message.author.id}) executed the command ${cmdInfo.name}`);
+  client.logger.log(`${message.author.username} (${message.author.id}) executed the ${cmdInfo.name} command.`);
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {
@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
 
   // If command needs arguments to be executed, send a error reply message in the chat
   if (cmdInfo.args && !args.length) {
-    let reply = (!cmdInfo.reply) ? `Você não especificou nenhum parâmetro, ${message.author}.` : command.reply;
+    let reply = `Você não especificou nenhum parâmetro, ${message.author}.`;
 
     if (cmdInfo.usage) {
       reply += `\nA maneira de uso correta seria: \`${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}\`.`;
