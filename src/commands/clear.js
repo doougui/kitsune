@@ -1,12 +1,12 @@
 module.exports = {
-  validate(client, message) {
+  validate (client, message, command) {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) {
       message.reply('você não tem permissão para executar este comando!');
-      throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${cmdInfo.name} because he/she has no permission!`);
+      throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${command.name} because he/she has no permission!`);
     }
   },
 
-  async execute(client, message, args) {
+  async execute (client, message, args) {
     await message.delete();
 
     if (!args.length) {
@@ -21,7 +21,9 @@ module.exports = {
       return message.reply('você precisa digitar um número maior que 0 e menor que 100.');
     }
 
-    await message.channel.fetchMessages({ limit: amount })
+    await message.channel.fetchMessages({
+      limit: amount
+    })
       .then(fetchedMessages => {
         message.channel.bulkDelete(fetchedMessages, true)
           .then(removedMessages => message.channel.send(`${removedMessages.size} mensagens foram deletadas!`)
@@ -30,7 +32,7 @@ module.exports = {
       });
   },
 
-  get cmdInfo() {
+  get cmdInfo () {
     return {
       name: 'clear',
       description: 'Clean the chat.',
@@ -38,7 +40,7 @@ module.exports = {
       requireArgs: true,
       usage: '<número de mensagens a serem excluídas>',
       cooldown: 5,
-      aliases: ['limpar'],
+      aliases: ['limpar']
     };
   }
-}
+};

@@ -30,7 +30,7 @@ module.exports = async (client, message) => {
 
   // Get command
   const command = client.commands.get(commandName) ||
-  client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
+    client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
   if (!command) return;
 
   const cmdInfo = command.cmdInfo;
@@ -84,7 +84,7 @@ module.exports = async (client, message) => {
   // Execute command
   try {
     if (command.validate) {
-      await command.validate(client, message, args);
+      await command.validate(client, message, cmdInfo, args);
     }
     command.execute(client, message, args);
   } catch (error) {

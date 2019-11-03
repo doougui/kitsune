@@ -1,14 +1,22 @@
-require('dotenv/config')
+require('dotenv/config');
 const Discord = require('discord.js');
 
 module.exports = {
-  async execute(client, message, args) {
-    const { commands } = message.client;
+  async execute (client, message, args) {
+    const {
+      commands
+    } = message.client;
 
     if (!args.length) {
-      commandList = commands.map(command => {
-        let { name, description } = command.cmdInfo;
-        return { name, description };
+      const commandList = commands.map(command => {
+        const {
+          name,
+          description
+        } = command.cmdInfo;
+        return {
+          name,
+          description
+        };
       });
 
       const helpEmbed = new Discord.RichEmbed()
@@ -19,7 +27,7 @@ module.exports = {
         .setTimestamp()
         .setFooter('Kitsune', 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
 
-      for (commandInfo of commandList) {
+      for (const commandInfo of commandList) {
         helpEmbed.addField(`${process.env.PREFIX}${commandInfo.name}`, `**Função**: ${commandInfo.description}`);
       }
 
@@ -34,16 +42,15 @@ module.exports = {
         });
     } else {
       const commandName = args[0].toLowerCase();
-      const command = commands.get(commandName) 
-        || commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
+      const command = commands.get(commandName) ||
+        commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
 
-        
       if (commandName.startsWith(process.env.PREFIX)) {
         return message.reply(`utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`);
       }
-      
+
       if (!command) {
-        return message.reply(`este comando não é válido!`);
+        return message.reply('este comando não é válido!');
       }
 
       const cmdInfo = command.cmdInfo;
@@ -55,24 +62,24 @@ module.exports = {
         .setTimestamp()
         .setFooter(`Comando solicitado por: ${message.author.username}`, 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
 
-      if (cmdInfo.aliases) helpEmbed.addField(`Alternativas`, cmdInfo.aliases.join(', '));
-      if (cmdInfo.description) helpEmbed.addField(`Descrição`, cmdInfo.description);
-      if (cmdInfo.usage) helpEmbed.addField(`Uso`, `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
+      if (cmdInfo.aliases) helpEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
+      if (cmdInfo.description) helpEmbed.addField('Descrição', cmdInfo.description);
+      if (cmdInfo.usage) helpEmbed.addField('Uso', `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
 
-      helpEmbed.addField(`Tempo de espera`, `${cmdInfo.cooldown || 3} segundos`);
+      helpEmbed.addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
 
       return message.channel.send(helpEmbed);
     }
   },
 
-  get cmdInfo() {
+  get cmdInfo () {
     return {
       name: 'help',
       description: 'Show available commands.',
       guildOnly: false,
       requireArgs: false,
       usage: '<opcional: [nome do comando]>',
-      aliases: ['commands', 'ajuda', 'comandos'],
+      aliases: ['commands', 'ajuda', 'comandos']
     };
   }
-}
+};

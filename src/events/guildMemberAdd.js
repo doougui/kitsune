@@ -1,6 +1,6 @@
 module.exports = async (client, member) => {
-  client.logger = require("../modules/Logger");
-  func = require('../modules/functions');
+  client.logger = require('../modules/Logger');
+  const func = require('../modules/functions');
 
   client.logger.log(`${member.displayName} (${member.id}) has entered the server ${member.guild}.`);
 
@@ -8,4 +8,4 @@ module.exports = async (client, member) => {
   channel.send(`Bem-vindo ao servidor, ${member}.`);
 
   func.updateTopicWithEmojiNum(member, channel);
-}
+};

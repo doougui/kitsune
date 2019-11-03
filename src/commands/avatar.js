@@ -1,38 +1,39 @@
 const Discord = require('discord.js');
 
 module.exports = {
-	async execute(client, message, args) {
-		avatarEmbed = new Discord.RichEmbed()
-			.setColor('#a50008');
+  async execute (client, message, args) {
+    const avatarEmbed = new Discord.RichEmbed().setColor('#a50008');
 
-		if (!message.mentions.users.size) {
-			avatarEmbed
-				.setTitle('👤 >> Seu avatar')
-				.setImage(message.author.displayAvatarURL);
+    if (!message.mentions.users.size) {
+      avatarEmbed
+        .setTitle('👤 >> Seu avatar')
+        .setImage(message.author.displayAvatarURL);
 
-			return message.channel.send(avatarEmbed);
-		}
-		
-		if (message.mentions.users.size <= 3) {
-			message.mentions.users.map(user => {
-				avatarEmbed
-					.setTitle(`👥 >> Avatar de ${user.username}`)
-					.setImage(user.displayAvatarURL)
+      return message.channel.send(avatarEmbed);
+    }
 
-				return message.channel.send(avatarEmbed);
-			});
-		} else {
-			return message.reply('você pode pegar o avatar de apenas três usuários por vez.');
-		}
-	},
+    if (message.mentions.users.size <= 3) {
+      message.mentions.users.map(user => {
+        avatarEmbed
+          .setTitle(`👥 >> Avatar de ${user.username}`)
+          .setImage(user.displayAvatarURL);
 
-	get cmdInfo() {
-		return {
-			name: 'avatar',
-			description: 'Show user\'s avatar.',
-			guildOnly: false,
-			requireArgs: false,
-			usage: '<opcional: [usuário]>'
-		};
-	},
+        return message.channel.send(avatarEmbed);
+      });
+    } else {
+      return message.reply(
+        'você pode pegar o avatar de apenas três usuários por vez.'
+      );
+    }
+  },
+
+  get cmdInfo () {
+    return {
+      name: 'avatar',
+      description: "Show user's avatar.",
+      guildOnly: false,
+      requireArgs: false,
+      usage: '<opcional: [usuário]>'
+    };
+  }
 };
