@@ -1,22 +1,17 @@
-require('dotenv/config');
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.env'
+});
+
 const Discord = require('discord.js');
 
 module.exports = {
   async execute (client, message, args) {
-    const {
-      commands
-    } = message.client;
+    const { commands } = message.client;
 
     if (!args.length) {
       const commandList = commands.map(command => {
-        const {
-          name,
-          description
-        } = command.cmdInfo;
-        return {
-          name,
-          description
-        };
+        const { name, description } = command.cmdInfo;
+        return { name, description };
       });
 
       const helpEmbed = new Discord.RichEmbed()

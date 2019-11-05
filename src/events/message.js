@@ -1,10 +1,11 @@
-require('dotenv/config');
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.env'
+});
+
 const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
 module.exports = async (client, message) => {
-  client.logger = require('../modules/Logger');
-
   // If message author is a bot, end execution
   if (message.author.bot) return;
 

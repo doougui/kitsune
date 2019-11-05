@@ -4,7 +4,10 @@ if (Number(process.version.slice(1).split('.')[0]) < 8) {
   );
 }
 
-require('dotenv/config');
+require('dotenv').config({
+  path: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.env'
+});
+
 const fs = require('fs');
 const Discord = require('discord.js');
 const client = new Discord.Client();
