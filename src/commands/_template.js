@@ -1,6 +1,6 @@
 module.exports = {
   // Permissions check, this function isn't required
-  validate (client, message) {},
+  validate (client, message, command) {},
 
   // Your command execution
   async execute (client, message, args) {},
