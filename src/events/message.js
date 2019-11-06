@@ -47,7 +47,7 @@ module.exports = async (client, message) => {
   }
 
   // If command needs arguments to be executed, send a error reply message in the chat
-  if (cmdInfo.args && !args.length) {
+  if (cmdInfo.requireArgs && !args.length) {
     let reply = `Você não especificou nenhum parâmetro, ${message.author}.`;
 
     if (cmdInfo.usage) {
