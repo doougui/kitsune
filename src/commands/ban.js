@@ -19,11 +19,6 @@ module.exports = {
 
     const guildUser = message.guild.member(user);
 
-    if (!guildUser.bannable) {
-      return message.reply('este usuário não pode ser banido!');
-    }
-    console.log(guildUser);
-
     const embedPunish = new Discord.RichEmbed()
       .setTitle('``🚔`` » Banimento')
       .addField('``👤`` **Usuário banido:**', guildUser.user, true)
@@ -39,14 +34,22 @@ module.exports = {
       )
       .setTimestamp();
 
-    message.channel.send('✅ Usuário banido com sucesso.');
-    message.channel.send(embedPunish);
+    try {
+      await guildUser.ban(`Motivo: ${reason} | Banido por: ${message.author.tag}`);
 
-    guildUser.send('Você foi banido, mais informações abaixo.', embedPunish);
+      client.logger.log(`${message.author.username} successfully banned ${guildUser.displayName} from the server ${message.guild.name}`);
 
-    await guildUser.ban(
-          `Motivo: ${reason} | Banido por: ${message.author.tag}`
-    );
+      message.channel.send('✅ Usuário banido com sucesso.');
+      message.channel.send(embedPunish);
+
+      guildUser.send('Você foi banido, mais informações abaixo.', embedPunish)
+        .catch((error) => {
+          client.logger.warn(`Failed to send direct message to ${guildUser.displayName} with ban details. ${error}`);
+        });
+    } catch (error) {
+      message.reply('não foi possível banir este usuário!');
+      client.logger.warn(`${message.author.username} failed to ban ${guildUser.displayName} from the server ${message.guild.name}. ${error}`);
+    }
   },
 
   get cmdInfo () {
