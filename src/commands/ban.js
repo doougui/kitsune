@@ -25,7 +25,6 @@ module.exports = {
       .addField('``👮`` **banido por:**', message.author, true)
       .addField('``📄`` **Tipo:**', 'Banimento', true)
       .addField('``🕒`` **Tempo:**', 'Permanentemente', true)
-      .addField('``📣`` **Motivo:**', reason, true)
       .setThumbnail(guildUser.user.avatarURL)
       .setColor('#a50008')
       .setFooter(
@@ -34,12 +33,16 @@ module.exports = {
       )
       .setTimestamp();
 
+    if (reason) {
+      guildUser.addField('``📣`` **Motivo:**', reason, true);
+    }
+
     try {
       await guildUser.ban(`Motivo: ${reason} | Banido por: ${message.author.tag}`);
 
       client.logger.log(`${message.author.username} successfully banned ${guildUser.displayName} from the server ${message.guild.name}`);
 
-      message.channel.send('✅ Usuário banido com sucesso.');
+      message.channel.send('``✅`` Usuário banido com sucesso.');
       message.channel.send(embedPunish);
 
       guildUser.send('Você foi banido, mais informações abaixo.', embedPunish)
