@@ -23,10 +23,10 @@ const init = () => {
 
   client.logger.log(`Loading a total of ${commandFiles.length} commands.`);
   commandFiles.forEach(file => {
-    const command = require(`./commands/${file}`);
+    const commandFile = require(`./commands/${file}`);
     const commandName = file.split('.')[0];
 
-    client.commands.set(commandName, command);
+    client.commands.set(commandName, commandFile);
   });
 
   // Load event files
@@ -36,10 +36,10 @@ const init = () => {
 
   client.logger.log(`Loading a total of ${eventFiles.length} events.`);
   eventFiles.forEach(file => {
+    const eventFile = require(`./events/${file}`);
     const eventName = file.split('.')[0];
-    const event = require(`./events/${file}`);
 
-    client.on(eventName, event.bind(null, client));
+    client.on(eventName, eventFile.bind(null, client));
   });
 
   client.login(process.env.TOKEN);

@@ -39,7 +39,7 @@ module.exports = async (client, message) => {
   // If the message author didn't provide the prefix, end execution
   if (!message.content.startsWith(process.env.PREFIX)) return;
 
-  client.logger.log(`${message.author.username} (${message.author.id}) executed the ${cmdInfo.name} command.`);
+  client.logger.cmd(`${message.author.username} (${message.author.id}) executed the ${cmdInfo.name} command.`);
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {

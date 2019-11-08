@@ -32,7 +32,7 @@ module.exports = {
           message.reply('te enviei uma mensagem com todos os meus comandos :)');
         })
         .catch(error => {
-          console.error(`Could not send help DM to ${message.author.tag}.\n`, error);
+          client.logger.error(`Could not send help DM to ${message.author.tag}. ${error}`);
           message.reply('não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :(');
         });
     } else {
