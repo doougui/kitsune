@@ -14,18 +14,18 @@ module.exports = {
     const reason = args.slice(1).join(' ');
 
     if (!user) {
-      return message.reply('um usuário deve ser mencionado antes do motivo!');
+      return message.reply('um usuário válido deve ser mencionado antes do motivo!');
     }
 
-    const guildUser = message.guild.member(user);
+    const userAsMember = message.guild.member(user);
 
     const embedPunish = new Discord.RichEmbed()
-      .setTitle('``🚔`` » Banimento')
-      .addField('``👤`` **Usuário banido:**', guildUser.user, true)
-      .addField('``👮`` **banido por:**', message.author, true)
+      .setTitle('``🚔`` » Punição')
+      .addField('``👤`` **Usuário punido:**', userAsMember.user, true)
+      .addField('``👮`` **Punido por:**', message.author, true)
       .addField('``📄`` **Tipo:**', 'Banimento', true)
       .addField('``🕒`` **Tempo:**', 'Permanentemente', true)
-      .setThumbnail(guildUser.user.avatarURL)
+      .setThumbnail(userAsMember.user.avatarURL)
       .setColor('#a50008')
       .setFooter(
         'Kitsune',
@@ -34,24 +34,24 @@ module.exports = {
       .setTimestamp();
 
     if (reason) {
-      guildUser.addField('``📣`` **Motivo:**', reason, true);
+      embedPunish.addField('``📣`` **Motivo:**', reason, true);
     }
 
     try {
-      await guildUser.ban(`Motivo: ${reason} | Banido por: ${message.author.tag}`);
+      await userAsMember.send(`\`\`🚔\`\` Você foi banido do servidor ${message.guild.name}, mais informações abaixo.`, embedPunish);
+      client.logger.log(`Successfully sent a message to ${userAsMember.displayName} with ban details.`);
+    } catch (error) {
+      client.logger.warn(`Failed to send direct message to ${userAsMember.displayName} with ban details. ${error}`);
+    }
 
-      client.logger.log(`${message.author.username} successfully banned ${guildUser.displayName} from the server ${message.guild.name}`);
+    try {
+      await userAsMember.ban(`Motivo: ${reason} | Punido por: ${message.author.tag}`);
 
-      message.channel.send('``✅`` Usuário banido com sucesso.');
-      message.channel.send(embedPunish);
-
-      guildUser.send('Você foi banido, mais informações abaixo.', embedPunish)
-        .catch((error) => {
-          client.logger.warn(`Failed to send direct message to ${guildUser.displayName} with ban details. ${error}`);
-        });
+      client.logger.log(`${message.author.username} successfully banned ${userAsMember.displayName} from the server ${message.guild.name}`);
+      message.channel.send('``✅`` Usuário banido com sucesso.', embedPunish);
     } catch (error) {
       message.reply('não foi possível banir este usuário!');
-      client.logger.warn(`${message.author.username} failed to ban ${guildUser.displayName} from the server ${message.guild.name}. ${error}`);
+      client.logger.warn(`${message.author.username} failed to ban ${userAsMember.displayName} from the server ${message.guild.name}. ${error}`);
     }
   },
 
