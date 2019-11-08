@@ -9,7 +9,7 @@ module.exports = {
 
     const catEmbed = new Discord.RichEmbed()
       .setColor('#a50008')
-      .setTitle(`${cats[Math.floor(Math.random() * cats.length)]}`)
+      .setTitle(`\`\`${cats[Math.floor(Math.random() * cats.length)]}\`\``)
       .setImage(file);
 
     message.channel.send(catEmbed);
