@@ -6,5 +6,9 @@ module.exports = async (client, member) => {
   const channel = helpers.getWelcomeChannel(member);
   channel.send(`Bem-vindo ao servidor, ${member}.`);
 
-  helpers.updateTopicWithEmojiNum(member, channel);
+  const emojiNum = helpers.convertNumberIntoEmoji(member, member.guild.memberCount);
+
+  channel.edit({
+    topic: `Atualmente há ${emojiNum} membros no servidor.`
+  });
 };

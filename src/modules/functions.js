@@ -10,18 +10,15 @@ module.exports = {
     return emojis[Math.floor(Math.random() * emojis.length)];
   },
 
-  updateTopicWithEmojiNum (member, channel) {
-    const emoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
-    const qtMembers = member.guild.memberCount;
+  convertNumberIntoEmoji (member, number) {
+    const numEmoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
     let emojiNum = '';
 
-    for (const num of qtMembers.toString()) {
-      emojiNum += emoji[num];
+    for (const num of number.toString()) {
+      emojiNum += numEmoji[num];
     }
 
-    channel.edit({
-      topic: `Atualmente há ${emojiNum} membros no servidor.`
-    });
+    return emojiNum;
   },
 
   getUserFromMention (client, mention) {
