@@ -3,7 +3,7 @@ module.exports = async (client, member) => {
 
   client.logger.log(`${member.displayName} (${member.id}) has left the server ${member.guild}.`);
 
-  const channel = helpers.getWelcomeChannel(member);
+  const channel = helpers.getChannel(member, process.env.WELCOME_CHAT);
   channel.send(`${member} saiu do servidor.`);
 
   const emojiNum = helpers.convertNumberIntoEmoji(member, member.guild.memberCount);

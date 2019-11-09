@@ -1,6 +1,6 @@
 module.exports = {
-  getWelcomeChannel (member) {
-    const channel = member.guild.channels.find(ch => ch.id === process.env.WELCOME_CHAT);
+  getChannel (member, channelId) {
+    const channel = member.guild.channels.find(ch => ch.id === channelId);
     if (!channel) return;
 
     return channel;
