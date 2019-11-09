@@ -66,7 +66,8 @@ module.exports = {
       if (cmdInfo.description) helpEmbed.addField('Descrição', cmdInfo.description);
       if (cmdInfo.usage) helpEmbed.addField('Uso', `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
 
-      helpEmbed.addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
+      helpEmbed
+        .addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
 
       return message.channel.send(helpEmbed);
     }

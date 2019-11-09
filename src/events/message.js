@@ -6,6 +6,8 @@ const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
 module.exports = async (client, message) => {
+  const helpers = require('../modules/functions');
+
   // If message author is a bot, end execution
   if (message.author.bot) return;
 
@@ -23,6 +25,18 @@ module.exports = async (client, message) => {
   } else if (message.content.toLowerCase() === 'boa noite') {
     message.react('💤');
     message.channel.send('noite!');
+  }
+
+  if (message.content.toLowerCase() === 'manda nudes') {
+    const policeEmojis = ['🚓', '🚔', '👮‍♂️', '👮‍♀️', '🚨'];
+    message.react(helpers.getRandomEmoji(policeEmojis));
+
+    const nudeEmbed = new Discord.RichEmbed()
+      .setColor('#a50008')
+      .setTitle('Eles estão chegando...')
+      .setImage('http://www.mediafire.com/convkey/ddfa/vukpappqr9l0i5uzg.jpg');
+
+    message.channel.send(nudeEmbed);
   }
 
   // Getting args and command name

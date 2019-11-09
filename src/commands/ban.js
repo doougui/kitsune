@@ -9,8 +9,8 @@ module.exports = {
   },
 
   async execute (client, message, args) {
-    const func = require('../modules/functions');
-    const user = func.getUserFromMention(client, args[0]);
+    const helpers = require('../modules/functions');
+    const user = helpers.getUserFromMention(client, args[0]);
     const reason = args.slice(1).join(' ');
 
     if (!user) {

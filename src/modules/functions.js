@@ -6,6 +6,10 @@ module.exports = {
     return channel;
   },
 
+  getRandomEmoji (emojis) {
+    return emojis[Math.floor(Math.random() * emojis.length)];
+  },
+
   updateTopicWithEmojiNum (member, channel) {
     const emoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
     const qtMembers = member.guild.memberCount;
