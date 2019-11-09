@@ -11,7 +11,7 @@ module.exports = {
 
     const catEmbed = new Discord.RichEmbed()
       .setColor('#a50008')
-      .setTitle(`\`\`${helpers.getRandomEmoji(cats)}\`\` » Meow`)
+      .setTitle(`\`\`${helpers.getRandomItem(cats)}\`\` » Meow`)
       .setImage(file);
 
     message.channel.send(catEmbed);

@@ -6,8 +6,8 @@ module.exports = {
     return channel;
   },
 
-  getRandomEmoji (emojis) {
-    return emojis[Math.floor(Math.random() * emojis.length)];
+  getRandomItem (itens) {
+    return itens[Math.floor(Math.random() * itens.length)];
   },
 
   convertNumberIntoEmoji (member, number) {
