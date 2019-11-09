@@ -15,12 +15,14 @@ module.exports = {
       });
 
       const helpEmbed = new Discord.RichEmbed()
+        .setTitle('``👨‍💻`` » Comandos')
+        .setDescription('Lista de todos os comandos:')
         .setColor('#a50008')
-        .setTitle('Comandos')
-        .setURL('https://github.com/doougui/kitsune')
-        .setDescription('Aqui está a lista de todos os comandos disponíveis:')
-        .setTimestamp()
-        .setFooter('Kitsune', 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
+        .setFooter(
+          'Kitsune',
+          `${client.user.avatarURL}`
+        )
+        .setTimestamp();
 
       for (const commandInfo of commandList) {
         helpEmbed.addField(`${process.env.PREFIX}${commandInfo.name}`, `**Função**: ${commandInfo.description}`);
@@ -51,11 +53,14 @@ module.exports = {
       const cmdInfo = command.cmdInfo;
 
       const helpEmbed = new Discord.RichEmbed()
-        .setColor('#a50008')
         .setTitle(`\`${process.env.PREFIX}${cmdInfo.name}\``)
         .setDescription(`Informações sobre o comando \`${process.env.PREFIX}${cmdInfo.name}\`:`)
-        .setTimestamp()
-        .setFooter(`Comando solicitado por: ${message.author.username}`, 'https://cdn131.picsart.com/272777513014211.png?r1024x1024');
+        .setColor('#a50008')
+        .setFooter(
+          `Comando solicitado por: ${message.author.username}`,
+          `${client.user.avatarURL}`
+        )
+        .setTimestamp();
 
       if (cmdInfo.aliases) helpEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
       if (cmdInfo.description) helpEmbed.addField('Descrição', cmdInfo.description);
