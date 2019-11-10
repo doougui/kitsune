@@ -1,26 +1,33 @@
 module.exports = {
-  validate (client, message, command) {
+  validate (message, command) {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) {
-      message.reply('você não tem permissão para executar este comando!');
+      message.client.replier.reply({
+        message,
+        title: 'Sem permissão.',
+        content: 'Você não tem permissão para executar este comando.'
+      });
       throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${command.name} because he/she has no permission!`);
     }
   },
 
   async execute (client, message, args) {
-    await message.delete();
-
-    if (!args.length) {
-      return message.reply('você não especificou o número de mensagens.');
-    }
-
     const amount = parseInt(args[0], 10);
 
     if (isNaN(amount)) {
-      return message.reply('você precisa digitar o número de mensagens a serem excluídas.');
+      return client.replier.reply({
+        message,
+        title: 'Número de mensagens inválido.',
+        content: 'Você precisa digitar o número de mensagens a serem excluídas.'
+      });
     } else if (amount <= 0 || amount > 100) {
-      return message.reply('você precisa digitar um número maior que 0 e menor que 100.');
+      return client.replier.reply({
+        message,
+        title: 'Número de mensagens inválido.',
+        content: 'Você precisa digitar um número maior que 0 e menor que 100.'
+      });
     }
 
+    await message.delete();
     await message.channel.fetchMessages({
       limit: amount
     })
@@ -28,7 +35,10 @@ module.exports = {
         message.channel.bulkDelete(fetchedMessages, true)
           .then(removedMessages => message.channel.send(`${removedMessages.size} mensagens foram deletadas!`)
             .then(botMsg => botMsg.delete(3000)))
-          .catch(err => message.channel.send(`Não foi possível deletar as mensagens deste canal! Erro: ${err}`));
+          .catch(error => {
+            message.channel.send(`Não foi possível deletar as mensagens deste canal! ${error}`);
+            client.logger.warn(`${message.author.username} (${message.author.id}) failed to delete messages on the ${message.channel.name} channel (${message.guild.name} server)`);
+          });
       });
   },
 

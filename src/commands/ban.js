@@ -1,9 +1,13 @@
 const Discord = require('discord.js');
 
 module.exports = {
-  validate (client, message, command) {
+  validate (message, command) {
     if (!message.member.hasPermission('BAN_MEMBERS')) {
-      message.reply('você não tem permissão para executar este comando!');
+      message.client.replier.reply({
+        message,
+        title: 'Sem permissão.',
+        content: 'Você não tem permissão para executar este comando.'
+      });
       throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${command.name} because he/she has no permission!`);
     }
   },
@@ -14,7 +18,11 @@ module.exports = {
     const reason = args.slice(1).join(' ');
 
     if (!user) {
-      return message.reply('um usuário válido deve ser mencionado antes do motivo!');
+      return client.replier.reply({
+        message,
+        title: 'Usuário inválido.',
+        content: 'Um usuário válido deve ser mencionado antes do motivo!'
+      });
     }
 
     const userAsMember = message.guild.member(user);
@@ -50,7 +58,12 @@ module.exports = {
       client.logger.log(`${message.author.username} successfully banned ${userAsMember.displayName} from the server ${message.guild.name}`);
       message.channel.send('``✅`` Usuário banido com sucesso.', embedPunish);
     } catch (error) {
-      message.reply('não foi possível banir este usuário!');
+      client.replier.reply({
+        message,
+        title: 'Impossível banir.',
+        content: 'Não foi possível banir este usuário!'
+      });
+
       client.logger.warn(`${message.author.username} failed to ban ${userAsMember.displayName} from the server ${message.guild.name}. ${error}`);
     }
   },

@@ -71,7 +71,11 @@ module.exports = async (client, message) => {
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {
-    return message.reply('este comando só pode ser executado em servidores.');
+    return client.replier.reply({
+      message,
+      title: 'Você não pode usar este comando aqui.',
+      content: 'Este comando só pode ser executado em servidores.'
+    });
   }
 
   // If command needs arguments to be executed, send a error reply message in the chat
@@ -113,7 +117,7 @@ module.exports = async (client, message) => {
   // Execute command
   try {
     if (command.validate) {
-      await command.validate(client, message, cmdInfo, args);
+      await command.validate(message, cmdInfo, args);
     }
     command.execute(client, message, args);
   } catch (error) {

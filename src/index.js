@@ -14,6 +14,7 @@ const client = new Discord.Client();
 
 client.commands = new Discord.Collection();
 client.logger = require('./modules/Logger');
+client.replier = require('./modules/Replier');
 
 const init = () => {
   // Load command files

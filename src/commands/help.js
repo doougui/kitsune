@@ -31,11 +31,20 @@ module.exports = {
       return message.author.send(helpEmbed)
         .then(() => {
           if (message.channel.type === 'dm') return;
-          message.reply('te enviei uma mensagem com todos os meus comandos :)');
+          return client.replier.reply({
+            message,
+            title: 'Lista de comandos enviada.',
+            content: 'Te enviei uma mensagem com todos os meus comandos :)',
+            type: 'success'
+          });
         })
         .catch(error => {
-          client.logger.error(`Could not send help DM to ${message.author.tag}. ${error}`);
-          message.reply('não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :(');
+          client.logger.error(`Could not send DM with the list of commands to ${message.author.tag}. ${error}`);
+          return client.replier.reply({
+            message,
+            title: 'Não foi possível te enviar a mensagem.',
+            content: 'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
+          });
         });
     } else {
       const commandName = args[0].toLowerCase();
@@ -43,11 +52,19 @@ module.exports = {
         commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
 
       if (commandName.startsWith(process.env.PREFIX)) {
-        return message.reply(`utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`);
+        return client.replier.reply({
+          message,
+          title: 'Formato inválido.',
+          content: `Utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`
+        });
       }
 
       if (!command) {
-        return message.reply('este comando não é válido!');
+        return client.replier.reply({
+          message,
+          title: 'Comando inválido.',
+          content: 'Este comando não é válido!'
+        });
       }
 
       const cmdInfo = command.info;
