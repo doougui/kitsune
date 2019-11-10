@@ -30,7 +30,7 @@ module.exports = {
   get cmdInfo () {
     return {
       name: 'avatar',
-      description: "Show user's avatar.",
+      description: 'Mostra o seu avatar ou o avatar de um (ou mais) usuários.',
       guildOnly: false,
       requireArgs: false,
       usage: '<opcional: [usuário]>'

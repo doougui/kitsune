@@ -76,7 +76,7 @@ module.exports = {
   get cmdInfo () {
     return {
       name: 'help',
-      description: 'Show available commands.',
+      description: 'Lista os comandos disponíveis ou informações sobre um determinado comando.',
       guildOnly: false,
       requireArgs: false,
       usage: '<opcional: [nome do comando]>',

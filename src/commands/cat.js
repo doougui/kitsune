@@ -20,7 +20,7 @@ module.exports = {
   get cmdInfo () {
     return {
       name: 'cat',
-      description: 'Shows a random cat picture.',
+      description: 'Mostra uma imagem aleatória de um gatinho.',
       guildOnly: false,
       requireArgs: false,
       cooldown: 5,

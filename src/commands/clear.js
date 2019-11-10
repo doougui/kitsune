@@ -35,7 +35,7 @@ module.exports = {
   get cmdInfo () {
     return {
       name: 'clear',
-      description: 'Clean the chat.',
+      description: 'Limpa o chat.',
       guildOnly: true,
       requireArgs: true,
       usage: '<número de mensagens a serem excluídas>',

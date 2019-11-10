@@ -58,7 +58,7 @@ module.exports = {
   get cmdInfo () {
     return {
       name: 'ban',
-      description: 'Ban a user',
+      description: 'Bane um usuário do servidor.',
       guildOnly: true,
       requireArgs: true,
       usage: '<@usuário> <motivo>',
