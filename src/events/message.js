@@ -107,7 +107,15 @@ module.exports = async (client, message) => {
 
     if (now < expirationTime) {
       const timeLeft = (expirationTime - now) / 1000;
-      return message.channel.send(`Por favor, espere ${timeLeft.toFixed(1)} segundo(s) antes de usar o comando \`${process.env.PREFIX}${cmdInfo.name}\` novamente ${message.author}.`);
+
+      message.delete();
+      return client.replier.reply({
+        message,
+        title: 'Cooldown.',
+        content: `Por favor, espere ${timeLeft.toFixed(1)} segundo(s) antes de usar o comando \`${process.env.PREFIX}${cmdInfo.name}\` novamente ${message.author}.`,
+        time: 5000,
+        type: 'warn'
+      });
     }
   }
 
