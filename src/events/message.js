@@ -59,10 +59,10 @@ module.exports = async (client, message) => {
 
   // Get command
   const command = client.commands.get(commandName) ||
-    client.commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
+    client.commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
   if (!command) return;
 
-  const cmdInfo = command.cmdInfo;
+  const cmdInfo = command.info;
 
   // If the message author didn't provide the prefix, end execution
   if (!message.content.startsWith(process.env.PREFIX)) return;

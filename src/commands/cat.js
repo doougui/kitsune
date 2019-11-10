@@ -17,7 +17,7 @@ module.exports = {
     message.channel.send(catEmbed);
   },
 
-  get cmdInfo () {
+  get info () {
     return {
       name: 'cat',
       description: 'Mostra uma imagem aleatória de um gatinho.',

@@ -6,7 +6,7 @@ module.exports = {
   async execute (client, message, args) {},
 
   // Your command infos
-  get cmdInfo () {
+  get info () {
     return {
       name: 'commandname',
       description: 'Some description here.',

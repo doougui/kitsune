@@ -55,7 +55,7 @@ module.exports = {
     }
   },
 
-  get cmdInfo () {
+  get info () {
     return {
       name: 'ban',
       description: 'Bane um usuário do servidor.',

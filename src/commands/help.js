@@ -10,7 +10,7 @@ module.exports = {
 
     if (!args.length) {
       const commandList = commands.map(command => {
-        const { name, description } = command.cmdInfo;
+        const { name, description } = command.info;
         return { name, description };
       });
 
@@ -40,7 +40,7 @@ module.exports = {
     } else {
       const commandName = args[0].toLowerCase();
       const command = commands.get(commandName) ||
-        commands.find(cmd => cmd.cmdInfo.aliases && cmd.cmdInfo.aliases.includes(commandName));
+        commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
 
       if (commandName.startsWith(process.env.PREFIX)) {
         return message.reply(`utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`);
@@ -50,7 +50,7 @@ module.exports = {
         return message.reply('este comando não é válido!');
       }
 
-      const cmdInfo = command.cmdInfo;
+      const cmdInfo = command.info;
 
       const helpEmbed = new Discord.RichEmbed()
         .setTitle(`\`${process.env.PREFIX}${cmdInfo.name}\``)
@@ -73,7 +73,7 @@ module.exports = {
     }
   },
 
-  get cmdInfo () {
+  get info () {
     return {
       name: 'help',
       description: 'Lista os comandos disponíveis ou informações sobre um determinado comando.',

@@ -32,7 +32,7 @@ module.exports = {
       });
   },
 
-  get cmdInfo () {
+  get info () {
     return {
       name: 'clear',
       description: 'Limpa o chat.',

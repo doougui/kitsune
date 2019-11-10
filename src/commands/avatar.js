@@ -27,7 +27,7 @@ module.exports = {
     }
   },
 
-  get cmdInfo () {
+  get info () {
     return {
       name: 'avatar',
       description: 'Mostra o seu avatar ou o avatar de um (ou mais) usuários.',
