@@ -3,10 +3,12 @@ const Discord = require('discord.js');
 module.exports = {
   validate (message, command) {
     if (!message.member.hasPermission('BAN_MEMBERS')) {
+      message.delete();
       message.client.replier.reply({
         message,
         title: 'Sem permissão.',
-        content: 'Você não tem permissão para executar este comando.'
+        content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[BAN_MEMBERS]`.',
+        time: 10000
       });
       throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${command.name} because he/she has no permission!`);
     }
