@@ -8,7 +8,7 @@ module.exports = {
         content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[MANAGE_MESSAGES]`.',
         time: 10000
       });
-      throw new Error(`${message.author.username} (${message.author.id}) failed to execute the command ${command.name} because he/she has no permission!`);
+      throw new Error(`${message.author.username} (${message.author.id}) failed to execute the ${command.name} command because he/she has no permission!`);
     }
   },
 

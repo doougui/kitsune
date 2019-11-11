@@ -2,12 +2,12 @@ const Discord = require('discord.js');
 
 module.exports = {
   validate (message, command) {
-    if (!message.member.hasPermission('BAN_MEMBERS')) {
+    if (!message.member.hasPermission('KICK_MEMBERS')) {
       message.delete();
       message.client.replier.reply({
         message,
         title: 'Sem permissão.',
-        content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[BAN_MEMBERS]`.',
+        content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[KICK_MEMBERS]`.',
         time: 10000
       });
       throw new Error(`${message.author.username} (${message.author.id}) failed to execute the ${command.name} command because he/she has no permission!`);
@@ -33,8 +33,7 @@ module.exports = {
       .setTitle('``🚔`` » Punição')
       .addField('``👤`` **Usuário punido:**', userAsMember.user, true)
       .addField('``👮`` **Punido por:**', message.author, true)
-      .addField('``📄`` **Tipo:**', 'Banimento', true)
-      .addField('``🕒`` **Tempo:**', 'Permanentemente', true)
+      .addField('``📄`` **Tipo:**', 'Expulsão', true)
       .setThumbnail(userAsMember.user.avatarURL)
       .setColor('#a50008')
       .setFooter(
@@ -48,37 +47,37 @@ module.exports = {
     }
 
     try {
-      await userAsMember.send(`\`\`🚔\`\` Você foi banido do servidor **${message.guild.name}**, mais informações abaixo.`, embedPunish);
-      client.logger.log(`Successfully sent a message to ${userAsMember.displayName} with ban details.`);
+      await userAsMember.send(`\`\`🚔\`\` Você foi expulso do servidor **${message.guild.name}**, mais informações abaixo.`, embedPunish);
+      client.logger.log(`Successfully sent a message to ${userAsMember.displayName} with kick details.`);
     } catch (error) {
-      client.logger.warn(`Failed to send direct message to ${userAsMember.displayName} with ban details. ${error}`);
+      client.logger.warn(`Failed to send direct message to ${userAsMember.displayName} with kick details. ${error}`);
     }
 
     try {
-      await userAsMember.ban(`Motivo: ${reason} | Punido por: ${message.author.tag}`);
+      await userAsMember.kick(`Motivo: ${reason} | Punido por: ${message.author.tag}`);
 
-      client.logger.log(`${message.author.username} successfully banned ${userAsMember.displayName} from the server ${message.guild.name}`);
-      message.channel.send('``✅`` Usuário banido com sucesso.', embedPunish);
+      client.logger.log(`${message.author.username} successfully kicked ${userAsMember.displayName} from the server ${message.guild.name}`);
+      message.channel.send('``✅`` Usuário expulso com sucesso.', embedPunish);
     } catch (error) {
       client.replier.reply({
         message,
         title: 'Impossível banir.',
-        content: 'Não foi possível banir este usuário!'
+        content: 'Não foi possível expulsar este usuário!'
       });
 
-      client.logger.warn(`${message.author.username} failed to ban ${userAsMember.displayName} from the server ${message.guild.name}. ${error}`);
+      client.logger.warn(`${message.author.username} failed to kick ${userAsMember.displayName} from the server ${message.guild.name}. ${error}`);
     }
   },
 
   get info () {
     return {
-      name: 'ban',
-      description: 'Bane um usuário do servidor.',
+      name: 'kick',
+      description: 'Expulsa um usuário do servidor.',
       guildOnly: true,
       requireArgs: true,
       usage: '<@usuário> <motivo>',
       cooldown: 3,
-      aliases: ['banir']
+      aliases: ['kickar', 'expulsar']
     };
   }
 };
