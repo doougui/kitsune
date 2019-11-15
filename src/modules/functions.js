@@ -11,7 +11,7 @@ module.exports = {
   },
 
   convertNumberIntoEmoji (member, number) {
-    const numEmoji = [':zero:', ':one', ':two', ':three:', ':four:', ':five:', ':six:', ':seven', ':eight', ':nine'];
+    const numEmoji = [':zero:', ':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:'];
     let emojiNum = '';
 
     for (const num of number.toString()) {
