@@ -15,8 +15,7 @@ module.exports = {
   },
 
   async execute (client, message, args) {
-    const helpers = require('../modules/functions');
-    const user = helpers.getUserFromMention(client, args[0]);
+    const user = client.getUserFromMention(client, args[0]);
     const reason = args.slice(1).join(' ');
 
     if (!user) {

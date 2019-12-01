@@ -1,16 +1,16 @@
-module.exports = {
-  getChannel (member, channelId) {
+module.exports = client => {
+  client.getChannel = (member, channelId) => {
     const channel = member.guild.channels.find(ch => ch.id === channelId);
     if (!channel) return;
 
     return channel;
   },
 
-  getRandomItem (itens) {
+  client.getRandomItem = itens => {
     return itens[Math.floor(Math.random() * itens.length)];
   },
 
-  convertNumberIntoEmoji (member, number) {
+  client.convertNumberIntoEmoji = (member, number) => {
     const numEmoji = [':zero:', ':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:'];
     let emojiNum = '';
 
@@ -21,7 +21,7 @@ module.exports = {
     return emojiNum;
   },
 
-  getUserFromMention (client, mention) {
+  client.getUserFromMention = (client, mention) => {
     // The id is the first and only match found by the RegEx.
     const matches = mention.match(/^<@!?(\d+)>$/);
 

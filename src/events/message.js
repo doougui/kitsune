@@ -7,8 +7,6 @@ const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
 module.exports = async (client, message) => {
-  const helpers = require('../modules/functions');
-
   // If message author is a bot, end execution
   if (message.author.bot) return;
 
@@ -30,14 +28,14 @@ module.exports = async (client, message) => {
 
   if (message.content.toLowerCase() === 'manda nudes') {
     const policeEmojis = ['🚓', '🚔', '👮‍♂️', '👮‍♀️', '🚨'];
-    message.react(helpers.getRandomItem(policeEmojis));
+    message.react(client.getRandomItem(policeEmojis));
 
     const nudes = [];
 
     const nudeFiles = fs.readdirSync('./assets/img/nude');
     nudeFiles.forEach(file => nudes.push(file));
 
-    const randomNude = helpers.getRandomItem(nudes);
+    const randomNude = client.getRandomItem(nudes);
 
     const imgAttachment = new Discord.Attachment(
       `./assets/img/nude/${randomNude}`,
