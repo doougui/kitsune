@@ -26,6 +26,7 @@ const init = () => {
   client.logger.log(`Loading a total of ${commandFiles.length} commands.`);
   commandFiles.forEach(file => {
     const commandFile = require(`./commands/${file}`);
+    // console.log(commandFile.info.name);
     const commandName = file.split('.')[0];
 
     client.commands.set(commandName, commandFile);

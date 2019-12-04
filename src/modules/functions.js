@@ -1,16 +1,25 @@
-module.exports = client => {
-  client.getChannel = (member, channelId) => {
-    const channel = member.guild.channels.find(ch => ch.id === channelId);
+/* eslint-disable no-unused-expressions */
+
+module.exports = async client => {
+  client.getChannel = ({ member, guild, channelId }) => {
+    let channel = null;
+
+    if (member) {
+      channel = member.guild.channels.find(ch => ch.id === channelId);
+    } else if (guild) {
+      channel = guild.channels.find(ch => ch.id === channelId);
+    }
+
     if (!channel) return;
 
     return channel;
-  },
+  };
 
   client.getRandomItem = itens => {
     return itens[Math.floor(Math.random() * itens.length)];
-  },
+  };
 
-  client.convertNumberIntoEmoji = (member, number) => {
+  client.convertNumberIntoEmoji = (number) => {
     const numEmoji = [':zero:', ':one:', ':two:', ':three:', ':four:', ':five:', ':six:', ':seven:', ':eight:', ':nine:'];
     let emojiNum = '';
 
@@ -19,7 +28,7 @@ module.exports = client => {
     }
 
     return emojiNum;
-  },
+  };
 
   client.getUserFromMention = (client, mention) => {
     // The id is the first and only match found by the RegEx.
@@ -33,5 +42,5 @@ module.exports = client => {
     const id = matches[1];
 
     return client.users.get(id);
-  }
+  };
 };
