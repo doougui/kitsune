@@ -3,7 +3,7 @@ module.exports = async (client) => {
 
   client.user.setPresence({
     game: {
-      name: 'what u say',
+      name: 'você | $help',
       type: 'LISTENING'
     },
     status: 'dnd'
