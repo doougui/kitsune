@@ -69,7 +69,7 @@ module.exports = async (client, message) => {
 
   // Check if command is 'server only' (can't be executed inside DMs)
   if (cmdInfo.guildOnly && message.channel.type !== 'text') {
-    return client.replier.reply({
+    return client.reply({
       message,
       title: 'Você não pode usar este comando aqui.',
       content: 'Este comando só pode ser executado em servidores.'
@@ -107,7 +107,7 @@ module.exports = async (client, message) => {
       const timeLeft = (expirationTime - now) / 1000;
 
       message.delete();
-      return client.replier.reply({
+      return client.reply({
         message,
         title: 'Cooldown.',
         content: `Por favor, espere ${timeLeft.toFixed(1)} segundo(s) antes de usar o comando \`${process.env.PREFIX}${cmdInfo.name}\` novamente ${message.author}.`,

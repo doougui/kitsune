@@ -23,7 +23,7 @@ module.exports = {
       });
     } else {
       client.logger.warn(`${message.author.username} failed to get avatars because he/she specified more than 3 users.`);
-      return client.replier.reply({
+      return client.reply({
         message,
         title: 'Muitos usuários.',
         content: 'Você pode pegar o avatar de apenas três usuários por vez.'

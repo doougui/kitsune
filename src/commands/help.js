@@ -31,7 +31,7 @@ module.exports = {
       return message.author.send(helpEmbed)
         .then(() => {
           if (message.channel.type === 'dm') return;
-          return client.replier.reply({
+          return client.reply({
             message,
             title: 'Lista de comandos enviada.',
             content: 'Te enviei uma mensagem com todos os meus comandos :)',
@@ -40,7 +40,7 @@ module.exports = {
         })
         .catch(error => {
           client.logger.error(`Could not send DM with the list of commands to ${message.author.tag}. ${error}`);
-          return client.replier.reply({
+          return client.reply({
             message,
             title: 'Não foi possível te enviar a mensagem.',
             content: 'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
@@ -52,7 +52,7 @@ module.exports = {
         commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
 
       if (commandName.startsWith(process.env.PREFIX)) {
-        return client.replier.reply({
+        return client.reply({
           message,
           title: 'Formato inválido.',
           content: `Utilize $help <comando> (sem o prefixo (${process.env.PREFIX})).`
@@ -60,7 +60,7 @@ module.exports = {
       }
 
       if (!command) {
-        return client.replier.reply({
+        return client.reply({
           message,
           title: 'Comando inválido.',
           content: 'Este comando não é válido!'

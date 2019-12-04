@@ -2,7 +2,7 @@ module.exports = {
   validate (message, command) {
     if (!message.member.hasPermission('MANAGE_MESSAGES')) {
       message.delete();
-      message.client.replier.reply({
+      message.client.reply({
         message,
         title: 'Sem permissão.',
         content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[MANAGE_MESSAGES]`.',
@@ -16,13 +16,13 @@ module.exports = {
     const amount = parseInt(args[0], 10);
 
     if (isNaN(amount)) {
-      return client.replier.reply({
+      return client.reply({
         message,
         title: 'Número de mensagens inválido.',
         content: 'Você precisa digitar o número de mensagens a serem excluídas.'
       });
     } else if (amount <= 0 || amount > 100) {
-      return client.replier.reply({
+      return client.reply({
         message,
         title: 'Número de mensagens inválido.',
         content: 'Você precisa digitar um número maior que 0 e menor que 100.'

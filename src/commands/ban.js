@@ -4,7 +4,7 @@ module.exports = {
   validate (message, command) {
     if (!message.member.hasPermission('BAN_MEMBERS')) {
       message.delete();
-      message.client.replier.reply({
+      message.client.reply({
         message,
         title: 'Sem permissão.',
         content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[BAN_MEMBERS]`.',
@@ -19,7 +19,7 @@ module.exports = {
     const reason = args.slice(1).join(' ');
 
     if (!user) {
-      return client.replier.reply({
+      return client.reply({
         message,
         title: 'Usuário inválido.',
         content: 'Um usuário válido deve ser mencionado antes do motivo!'
@@ -59,7 +59,7 @@ module.exports = {
       client.logger.log(`${message.author.username} successfully banned ${userAsMember.displayName} from the server ${message.guild.name}`);
       message.channel.send('``✅`` Usuário banido com sucesso.', embedPunish);
     } catch (error) {
-      client.replier.reply({
+      client.reply({
         message,
         title: 'Impossível banir.',
         content: 'Não foi possível banir este usuário!'
