@@ -18,18 +18,26 @@ client.logger = require('./modules/Logger');
 
 const init = () => {
   // Load command files
-  const commandFiles = fs
-    .readdirSync('./src/commands')
-    .filter(file => file.endsWith('.js') && !file.startsWith('_'));
+  const directories = fs
+    .readdirSync('./src/commands', { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
 
-  client.logger.log(`Loading a total of ${commandFiles.length} commands.`);
-  commandFiles.forEach(file => {
-    const commandFile = require(`./commands/${file}`);
-    // console.log(commandFile.info.name);
-    const commandName = file.split('.')[0];
+  directories.forEach(folder => {
+    const commandFiles = fs
+      .readdirSync(`./src/commands/${folder}`)
+      .filter(file => file.endsWith('.js') && !file.startsWith('_'));
 
-    client.commands.set(commandName, commandFile);
+    commandFiles.forEach(file => {
+      const commandFile = require(`./commands/${folder}/${file}`);
+      // console.log(commandFile.info.name);
+      const commandName = file.split('.')[0];
+
+      client.commands.set(commandName, commandFile);
+    });
   });
+
+  client.logger.log(`Loading a total of ${client.commands.size} commands.`);
 
   // Load event files
   const eventFiles = fs

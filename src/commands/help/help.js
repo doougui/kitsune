@@ -25,7 +25,9 @@ module.exports = {
         .setTimestamp();
 
       for (const commandInfo of commandList) {
-        helpEmbed.addField(`${process.env.PREFIX}${commandInfo.name}`, `**Função**: ${commandInfo.description}`);
+        helpEmbed
+          .addField(`${process.env.PREFIX}${commandInfo.name}`,
+          `**Função**: ${commandInfo.description}`);
       }
 
       return message.author.send(helpEmbed)
