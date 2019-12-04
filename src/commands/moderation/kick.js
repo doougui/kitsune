@@ -26,6 +26,14 @@ module.exports = {
       });
     }
 
+    if (!user.bannable) {
+      return client.reply({
+        message,
+        title: 'Impssível expulsar.',
+        content: 'Você não pode expulsar um moderador!'
+      });
+    }
+
     const userAsMember = message.guild.member(user);
 
     const embedPunish = new Discord.RichEmbed()
