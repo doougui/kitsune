@@ -42,7 +42,7 @@ module.exports = async client => {
     return client.users.get(id);
   };
 
-  client.reply = ({ message, title, content, time = 0, type = 'error' }) => {
+  client.reply = async ({ message, title, content, time = 0, type = 'error' }) => {
     let emoji = '';
 
     switch (type) {
@@ -65,20 +65,16 @@ module.exports = async client => {
       .setColor('#a50008')
       .setFooter(
         'Kitsune',
-        `${message.client.user.avatarURL}`
+        client.user.avatarURL
       )
       .setTimestamp();
 
-    message.channel.send(
-      message.author,
-      replyEmbed
-    )
-      .then(msg => {
-        if (time === 0) return;
-        msg.delete(time);
-      })
-      .catch(error => {
-        message.client.logger.warn(`Failed to send a reply message to ${message.author.username}. ${error}`);
-      });
+    try {
+      const msg = await message.channel.send(message.author, replyEmbed);
+      if (time === 0) return;
+      msg.delete(time);
+    } catch (error) {
+      message.client.logger.warn(`Failed to send a reply message to ${message.author.username}. ${error}`);
+    }
   };
 };

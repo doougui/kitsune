@@ -48,7 +48,11 @@ module.exports = async (client, message) => {
     }
 
     if (cmdInfo.aliases) {
-      reply += `\nAlém de \`${process.env.PREFIX}${cmdInfo.name}\`, você também pode usar: \`${process.env.PREFIX}${cmdInfo.aliases.join(', ')}\`.`;
+      const aliases = cmdInfo.aliases.map(item => {
+        return `\`${process.env.PREFIX}${item}\``;
+      });
+
+      reply += `\nAlém de \`${process.env.PREFIX}${cmdInfo.name}\`, você também pode usar: ${aliases.join(', ')}.`;
     }
 
     return message.channel.send(reply);

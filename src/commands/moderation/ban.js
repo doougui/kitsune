@@ -46,7 +46,7 @@ module.exports = {
       .setColor('#a50008')
       .setFooter(
         'Kitsune',
-        `${client.user.avatarURL}`
+        client.user.avatarURL
       )
       .setTimestamp();
 

@@ -21,7 +21,7 @@ module.exports = {
         .setColor('#a50008')
         .setFooter(
           'Kitsune',
-          `${client.user.avatarURL}`
+          client.user.avatarURL
         )
         .setTimestamp();
 
@@ -36,12 +36,12 @@ module.exports = {
       }
 
       const noPrefixEmbed = new Discord.RichEmbed()
-        .setTitle('``👨‍💻`` » Respostas de chat (sem prefixo)')
+        .setTitle('``💬`` » Respostas de chat (sem prefixo)')
         .setDescription('Lista de todos os comandos sem prefixo:')
         .setColor('#a50008')
         .setFooter(
           'Kitsune',
-        `${client.user.avatarURL}`
+          client.user.avatarURL
         )
         .setTimestamp();
 
@@ -50,26 +50,26 @@ module.exports = {
           .addField(noPrefixCmd.name,
             `**Função**: ${noPrefixCmd.description}`);
       }
+      try {
+        await message.author.send(cmdEmbed);
+        await message.author.send(noPrefixEmbed);
 
-      return message.author.send(cmdEmbed)
-        .then(() => {
-          message.author.send(noPrefixEmbed);
-          if (message.channel.type === 'dm') return;
-          return client.reply({
-            message,
-            title: 'Lista de comandos enviada.',
-            content: 'Te enviei uma mensagem com todos os meus comandos :)',
-            type: 'success'
-          });
-        })
-        .catch(error => {
-          client.logger.error(`Could not send DM with the list of commands to ${message.author.tag}. ${error}`);
-          return client.reply({
-            message,
-            title: 'Não foi possível te enviar a mensagem.',
-            content: 'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
-          });
+        if (message.channel.type === 'dm') return;
+
+        return client.reply({
+          message,
+          title: 'Lista de comandos enviada.',
+          content: 'Te enviei uma mensagem com todos os meus comandos :)',
+          type: 'success'
         });
+      } catch (error) {
+        client.logger.error(`Could not send DM with the list of commands to ${message.author.tag}. ${error}`);
+        return client.reply({
+          message,
+          title: 'Não foi possível te enviar a mensagem.',
+          content: 'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
+        });
+      }
     } else {
       const commandName = (args.length === 1) ? args[0].toLowerCase() : args.join(' ');
 
@@ -100,7 +100,7 @@ module.exports = {
         .setColor('#a50008')
         .setFooter(
           `Comando solicitado por: ${message.author.username}`,
-          `${client.user.avatarURL}`
+          client.user.avatarURL
         )
         .setTimestamp();
 
