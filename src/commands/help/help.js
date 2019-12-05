@@ -96,7 +96,7 @@ module.exports = {
 
       const cmdEmbed = new Discord.RichEmbed()
         .setTitle(`\`${(cmdInfo.requirePrefix) ? process.env.PREFIX : ''}${cmdInfo.name}\``)
-        .setDescription(`Informações sobre o comando \`${process.env.PREFIX}${cmdInfo.name}\`:`)
+        .setDescription(`Informações sobre o comando \`${(cmdInfo.requirePrefix) ? process.env.PREFIX : ''}${cmdInfo.name}\`:`)
         .setColor('#a50008')
         .setFooter(
           `Comando solicitado por: ${message.author.username}`,
