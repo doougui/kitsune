@@ -4,13 +4,9 @@ const Discord = require('discord.js');
 
 module.exports = async client => {
   client.getChannel = ({ member, guild, channelId }) => {
-    let channel = null;
-
-    if (member) {
-      channel = member.guild.channels.find(ch => ch.id === channelId);
-    } else if (guild) {
-      channel = guild.channels.find(ch => ch.id === channelId);
-    }
+    const channel = (member)
+      ? member.guild.channels.find(ch => ch.id === channelId)
+      : guild.channels.find(ch => ch.id === channelId); ;
 
     if (!channel) return;
 

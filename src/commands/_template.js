@@ -12,6 +12,7 @@ module.exports = {
       description: 'Some description here.',
       guildOnly: true,
       requireArgs: true,
+      requirePrefix: true,
       // The options below are not required
       usage: '<usage>',
       cooldown: 3,

@@ -7,14 +7,15 @@ const Discord = require('discord.js');
 module.exports = {
   async execute (client, message, args) {
     const { commands } = message.client;
+    const noPrefixCommands = [];
 
     if (!args.length) {
       const commandList = commands.map(command => {
-        const { name, description } = command.info;
-        return { name, description };
+        const { name, description, requirePrefix } = command.info;
+        return { name, description, requirePrefix };
       });
 
-      const helpEmbed = new Discord.RichEmbed()
+      const cmdEmbed = new Discord.RichEmbed()
         .setTitle('``👨‍💻`` » Comandos')
         .setDescription('Lista de todos os comandos:')
         .setColor('#a50008')
@@ -25,13 +26,34 @@ module.exports = {
         .setTimestamp();
 
       for (const commandInfo of commandList) {
-        helpEmbed
-          .addField(`${process.env.PREFIX}${commandInfo.name}`,
-          `**Função**: ${commandInfo.description}`);
+        if (commandInfo.requirePrefix) {
+          cmdEmbed
+            .addField(`${process.env.PREFIX}${commandInfo.name}`,
+            `**Função**: ${commandInfo.description}`);
+        } else {
+          noPrefixCommands.push(commandInfo);
+        }
       }
 
-      return message.author.send(helpEmbed)
+      const noPrefixEmbed = new Discord.RichEmbed()
+        .setTitle('``👨‍💻`` » Respostas de chat (sem prefixo)')
+        .setDescription('Lista de todos os comandos sem prefixo:')
+        .setColor('#a50008')
+        .setFooter(
+          'Kitsune',
+        `${client.user.avatarURL}`
+        )
+        .setTimestamp();
+
+      for (const noPrefixCmd of noPrefixCommands) {
+        noPrefixEmbed
+          .addField(noPrefixCmd.name,
+            `**Função**: ${noPrefixCmd.description}`);
+      }
+
+      return message.author.send(cmdEmbed)
         .then(() => {
+          message.author.send(noPrefixEmbed);
           if (message.channel.type === 'dm') return;
           return client.reply({
             message,
@@ -49,7 +71,8 @@ module.exports = {
           });
         });
     } else {
-      const commandName = args[0].toLowerCase();
+      const commandName = (args.length === 1) ? args[0].toLowerCase() : args.join(' ');
+
       const command = commands.get(commandName) ||
         commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
 
@@ -71,8 +94,8 @@ module.exports = {
 
       const cmdInfo = command.info;
 
-      const helpEmbed = new Discord.RichEmbed()
-        .setTitle(`\`${process.env.PREFIX}${cmdInfo.name}\``)
+      const cmdEmbed = new Discord.RichEmbed()
+        .setTitle(`\`${(cmdInfo.requirePrefix) ? process.env.PREFIX : ''}${cmdInfo.name}\``)
         .setDescription(`Informações sobre o comando \`${process.env.PREFIX}${cmdInfo.name}\`:`)
         .setColor('#a50008')
         .setFooter(
@@ -81,14 +104,14 @@ module.exports = {
         )
         .setTimestamp();
 
-      if (cmdInfo.aliases) helpEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
-      if (cmdInfo.description) helpEmbed.addField('Descrição', cmdInfo.description);
-      if (cmdInfo.usage) helpEmbed.addField('Uso', `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
+      if (cmdInfo.aliases) cmdEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
+      if (cmdInfo.description) cmdEmbed.addField('Descrição', cmdInfo.description);
+      if (cmdInfo.usage) cmdEmbed.addField('Uso', `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
 
-      helpEmbed
+      cmdEmbed
         .addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
 
-      return message.channel.send(helpEmbed);
+      return message.channel.send(cmdEmbed);
     }
   },
 
@@ -98,6 +121,7 @@ module.exports = {
       description: 'Lista os comandos disponíveis ou informações sobre um determinado comando.',
       guildOnly: false,
       requireArgs: false,
+      requirePrefix: true,
       usage: '<opcional: [nome do comando]>',
       aliases: ['commands', 'ajuda', 'comandos']
     };

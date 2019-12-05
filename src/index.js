@@ -17,7 +17,6 @@ client.commands = new Discord.Collection();
 client.logger = require('./modules/Logger');
 
 const init = () => {
-
   const loadCommands = () => {
     const directories = fs
       .readdirSync('./src/commands', { withFileTypes: true })
@@ -31,8 +30,7 @@ const init = () => {
 
       commandFiles.forEach(file => {
         const commandFile = require(`./commands/${folder}/${file}`);
-        // console.log(commandFile.info.name);
-        const commandName = file.split('.')[0];
+        const commandName = commandFile.info.name;
 
         client.commands.set(commandName, commandFile);
       });

@@ -37,6 +37,7 @@ module.exports = {
       description: 'Mostra o seu avatar ou o avatar de um (ou mais) usuários.',
       guildOnly: false,
       requireArgs: false,
+      requirePrefix: true,
       usage: '<opcional: [usuário]>'
     };
   }

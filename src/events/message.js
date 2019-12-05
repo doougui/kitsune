@@ -2,7 +2,6 @@ require('dotenv').config({
   path: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.env'
 });
 
-const fs = require('fs');
 const Discord = require('discord.js');
 const cooldowns = new Discord.Collection();
 
@@ -15,55 +14,19 @@ module.exports = async (client, message) => {
     message.react('❌');
   }
 
-  if (message.content.toLowerCase() === 'bom dia') {
-    message.react('🌅');
-    message.channel.send('dia!');
-  } else if (message.content.toLowerCase() === 'boa tarde') {
-    message.react('🌞');
-    message.channel.send('tarde!');
-  } else if (message.content.toLowerCase() === 'boa noite') {
-    message.react('💤');
-    message.channel.send('noite!');
-  }
-
-  if (message.content.toLowerCase() === 'manda nudes') {
-    const policeEmojis = ['🚓', '🚔', '👮‍♂️', '👮‍♀️', '🚨'];
-    message.react(client.getRandomItem(policeEmojis));
-
-    const nudes = [];
-
-    const nudeFiles = fs.readdirSync('./assets/img/nude');
-    nudeFiles.forEach(file => nudes.push(file));
-
-    const randomNude = client.getRandomItem(nudes);
-
-    const imgAttachment = new Discord.Attachment(
-      `./assets/img/nude/${randomNude}`,
-      `${randomNude}`
-    );
-
-    const nudeEmbed = new Discord.RichEmbed()
-      .setColor('#a50008')
-      .setTitle('``🚔`` » Eles estão chegando...')
-      .attachFile(imgAttachment)
-      .setImage(`attachment://${randomNude}`);
-
-    message.channel.send(nudeEmbed);
-  }
-
   // Getting args and command name
   const args = message.content.slice(process.env.PREFIX.length).split(/ +/);
-  const commandName = args.shift().toLowerCase();
+  const commandName = (message.content.startsWith(process.env.PREFIX))
+    ? args.shift().toLowerCase()
+    : message.content;
 
   // Get command
   const command = client.commands.get(commandName) ||
     client.commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
+
   if (!command) return;
 
   const cmdInfo = command.info;
-
-  // If the message author didn't provide the prefix, end execution
-  if (!message.content.startsWith(process.env.PREFIX)) return;
 
   client.logger.cmd(`${message.author.username} (${message.author.id}) executed the ${cmdInfo.name} command.`);
 

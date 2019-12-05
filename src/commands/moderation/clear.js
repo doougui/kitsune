@@ -50,6 +50,7 @@ module.exports = {
       description: 'Limpa o chat.',
       guildOnly: true,
       requireArgs: true,
+      requirePrefix: true,
       usage: '<número de mensagens a serem excluídas>',
       cooldown: 5,
       aliases: ['limpar']

@@ -21,6 +21,7 @@ module.exports = {
       description: 'Mostra uma imagem aleatória de um gatinho.',
       guildOnly: false,
       requireArgs: false,
+      requirePrefix: true,
       cooldown: 5,
       aliases: ['miau', 'meow', 'gato', 'gatinho']
     };

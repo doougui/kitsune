@@ -82,6 +82,7 @@ module.exports = {
       description: 'Expulsa um usuário do servidor.',
       guildOnly: true,
       requireArgs: true,
+      requirePrefix: true,
       usage: '<@usuário> <motivo>',
       cooldown: 3,
       aliases: ['kickar', 'expulsar']
