@@ -77,4 +77,15 @@ module.exports = async client => {
       message.client.logger.warn(`Failed to send a reply message to ${message.author.username}. ${error}`);
     }
   };
+
+  client.awaitReply = async (msg, limit = 30000) => {
+    const filter = m => m.author.id === msg.author.id;
+
+    try {
+      const collected = await msg.channel.awaitMessages(filter, { max: 1, time: limit, errors: ['time'] });
+      return collected.first().content;
+    } catch (error) {
+      return false;
+    }
+  };
 };

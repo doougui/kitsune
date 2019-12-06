@@ -26,14 +26,6 @@ module.exports = {
       });
     }
 
-    if (!user.bannable) {
-      return client.reply({
-        message,
-        title: 'Impssível banir.',
-        content: 'Você não pode banir um moderador!'
-      });
-    }
-
     const userAsMember = message.guild.member(user);
 
     const embedPunish = new Discord.RichEmbed()
