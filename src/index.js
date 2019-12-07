@@ -30,7 +30,7 @@ const init = () => {
 
       commandFiles.forEach(file => {
         const commandFile = require(`./commands/${folder}/${file}`);
-        const commandName = commandFile.info.name;
+        const commandName = commandFile.info.name.toLowerCase();
 
         client.commands.set(commandName, commandFile);
       });

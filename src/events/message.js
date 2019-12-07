@@ -9,6 +9,8 @@ module.exports = async (client, message) => {
   // If message author is a bot, end execution
   if (message.author.bot) return;
 
+  message.content = message.content.toLowerCase();
+
   if (message.channel.id === process.env.SUGGESTION_CHAT) {
     message.react('✅');
     message.react('❌');
