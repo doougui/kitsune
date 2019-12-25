@@ -1,7 +1,3 @@
-require('dotenv').config({
-  path: process.env.NODE_ENV === 'dev' ? '.dev.env' : '.env'
-});
-
 const Discord = require('discord.js');
 
 module.exports = {

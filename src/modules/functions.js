@@ -28,7 +28,7 @@ module.exports = async client => {
     return emojiNum;
   };
 
-  client.getUserFromMention = (client, mention) => {
+  client.getUserFromMention = (mention, guild = null, guildMember = false) => {
     // The id is the first and only match found by the RegEx.
     const matches = mention.match(/^<@!?(\d+)>$/);
 
@@ -39,9 +39,30 @@ module.exports = async client => {
     // so use index 1.
     const id = matches[1];
 
-    return client.users.get(id);
+    const user = client.users.get(id);
+
+    return (guildMember && guild) ? guild.member(user) : user;
   };
 
+  client.createSilenceRole = async guild => {
+    const newSilenceRole = await guild.createRole({
+      name: '🙊 Mutado',
+      color: 'GRAY',
+      permissions: 0
+    });
+
+    const channels = guild.channels;
+
+    channels.forEach(async channel => {
+      await channel.overwritePermissions(newSilenceRole, {
+        SEND_MESSAGES: false
+      });
+    });
+
+    return newSilenceRole;
+  };
+
+  // TO-DO: substituir message por channel e author
   client.reply = async ({ message, title, content, time = 0, type = 'error' }) => {
     let emoji = '';
 
