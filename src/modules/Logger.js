@@ -7,22 +7,22 @@ const moment = require('moment');
 exports.log = (content, type = 'log') => {
   const timestamp = `[${moment().format('YYYY-MM-DD HH:mm:ss')}]:`;
 
-  switch (type) {
-    case 'log':
-      return console.log(`${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content} `);
-    case 'warn':
-      return console.log(`${timestamp} ${chalk.black.bgYellow(type.toUpperCase())} ${content} `);
-    case 'error':
-      return console.log(`${timestamp} ${chalk.bgRed(type.toUpperCase())} ${content} `);
-    case 'debug':
-      return console.log(`${timestamp} ${chalk.green(type.toUpperCase())} ${content} `);
-    case 'cmd':
-      return console.log(`${timestamp} ${chalk.black.bgWhite(type.toUpperCase())} ${content}`);
-    case 'ready':
-      return console.log(`${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`);
-    default:
-      throw new TypeError('Logger type must be either log, warn, error, debug, cmd or ready.');
+  const types = {
+    log: `${timestamp} ${chalk.bgBlue(type.toUpperCase())} ${content}`,
+    warn: `${timestamp} ${chalk.black.bgYellow(type.toUpperCase())} ${content}`,
+    error: `${timestamp} ${chalk.bgRed(type.toUpperCase())} ${content}`,
+    debug: `${timestamp} ${chalk.green(type.toUpperCase())} ${content}`,
+    cmd: `${timestamp} ${chalk.black.bgWhite(type.toUpperCase())} ${content}`,
+    ready: `${timestamp} ${chalk.black.bgGreen(type.toUpperCase())} ${content}`
+  };
+
+  const log = types[type];
+
+  if (!log) {
+    throw new Error('Logger type must be either log, warn, error, debug, cmd or ready.');
   }
+
+  console.log(log);
 };
 
 exports.warn = (...args) => this.log(...args, 'warn');

@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
   validate (message, command) {
-    if (!message.member.hasPermission('BAN_MEMBERS')) {
+    if (!message.member.hasPermission('MUTE_MEMBERS')) {
       message.delete();
       message.client.reply({
         message,
