@@ -35,9 +35,9 @@ module.exports = {
       .addField('``👮`` **Punido por:**', message.author, true)
       .addField('``📄`` **Tipo:**', 'Banimento', true)
       .addField('``🕒`` **Tempo:**', 'Permanentemente', true)
-      .setThumbnail(guildMember.user.avatarURL)
+      .setThumbnail(guildMember.user.avatarURL())
       .setColor('#a50008')
-      .setFooter('Kitsune', client.user.avatarURL)
+      .setFooter('Kitsune', client.user.avatarURL())
       .setTimestamp();
 
     if (reason) {

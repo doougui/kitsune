@@ -15,7 +15,7 @@ module.exports = {
         .setTitle('``👨‍💻`` » Comandos')
         .setDescription('Lista de todos os comandos:')
         .setColor('#a50008')
-        .setFooter('Kitsune', client.user.avatarURL)
+        .setFooter('Kitsune', client.user.avatarURL())
         .setTimestamp();
 
       for (const commandInfo of commandList) {
@@ -33,7 +33,7 @@ module.exports = {
         .setTitle('``💬`` » Respostas de chat (sem prefixo)')
         .setDescription('Lista de todos os comandos sem prefixo:')
         .setColor('#a50008')
-        .setFooter('Kitsune', client.user.avatarURL)
+        .setFooter('Kitsune', client.user.avatarURL())
         .setTimestamp();
 
       for (const noPrefixCmd of noPrefixCommands) {
@@ -107,7 +107,7 @@ module.exports = {
         .setColor('#a50008')
         .setFooter(
           `Comando solicitado por: ${message.author.username}`,
-          client.user.avatarURL
+          client.user.avatarURL()
         )
         .setTimestamp();
 

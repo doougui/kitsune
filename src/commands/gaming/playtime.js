@@ -38,7 +38,7 @@ module.exports = {
       .setTitle('``🎮`` » Lista de jogos encontrados')
       .addField('Escolha um jogo digitando seu número', gamesString, true)
       .setColor('#a50008')
-      .setFooter('Kitsune', client.user.avatarURL)
+      .setFooter('Kitsune', client.user.avatarURL())
       .setTimestamp();
 
     const listMsg = await message.channel.send(gameListEmbed);
@@ -79,7 +79,7 @@ module.exports = {
         )
         .setThumbnail(gameDetails.imageUrl)
         .setColor('#a50008')
-        .setFooter('Kitsune', client.user.avatarURL)
+        .setFooter('Kitsune', client.user.avatarURL())
         .setTimestamp();
 
       message.channel.send(gameDetailsEmbed);

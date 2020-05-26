@@ -36,7 +36,7 @@ module.exports = {
       .addField('``📄`` **Tipo:**', 'Expulsão', true)
       .setThumbnail(guildMember.user.avatarURL)
       .setColor('#a50008')
-      .setFooter('Kitsune', `${client.user.avatarURL}`)
+      .setFooter('Kitsune', `${client.user.avatarURL()}`)
       .setTimestamp();
 
     if (reason) {

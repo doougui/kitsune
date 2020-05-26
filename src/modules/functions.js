@@ -82,7 +82,7 @@ module.exports = async client => {
       .setColor('#a50008')
       .setFooter(
         'Kitsune',
-        client.user.avatarURL
+        client.user.avatarURL()
       )
       .setTimestamp();
 

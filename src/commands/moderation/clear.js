@@ -32,14 +32,15 @@ module.exports = {
     await message.delete();
 
     try {
-      const fetchedMessages = await message.channel.fetchMessages({ limit: amount });
+      const fetchedMessages = await message.channel.messages.fetch({ limit: amount });
       const removedMessages = await message.channel.bulkDelete(fetchedMessages, true);
 
       const botMsg = await message.channel.send(`${removedMessages.size} mensagens foram deletadas!`);
-      botMsg.delete(3000);
+
+      botMsg.delete({ timeout: 3000 });
     } catch (error) {
-      message.channel.send(`Não foi possível deletar as mensagens deste canal! ${error}`);
-      client.logger.warn(`${message.author.username} (${message.author.id}) failed to delete messages on the ${message.channel.name} channel (${message.guild.name} server)`);
+      message.channel.send('Não foi possível deletar as mensagens deste canal!');
+      client.logger.warn(`${message.author.username} (${message.author.id}) failed to delete messages on the ${message.channel.name} channel (${message.guild.name} server). Error: ${error}`);
     }
   },
 

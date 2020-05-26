@@ -8,7 +8,7 @@ module.exports = {
     if (!message.mentions.users.size) {
       avatarEmbed
         .setTitle('``👤`` » Seu avatar')
-        .setImage(message.author.displayAvatarURL);
+        .setImage(message.author.displayAvatarURL());
 
       return message.channel.send(avatarEmbed);
     }
@@ -17,7 +17,7 @@ module.exports = {
       message.mentions.users.map(user => {
         avatarEmbed
           .setTitle(`\`\`👥\`\` » Avatar de ${user.username}`)
-          .setImage(user.displayAvatarURL);
+          .setImage(user.displayAvatarURL());
 
         return message.channel.send(avatarEmbed);
       });

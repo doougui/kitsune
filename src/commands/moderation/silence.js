@@ -38,11 +38,11 @@ module.exports = {
       .addField('``👮`` **Punido por:**', message.author, true)
       .addField('``📄`` **Tipo:**', 'Silenciamento', true)
       .addField('``🕒`` **Tempo:**', 'Permanentemente', true)
-      .setThumbnail(guildMember.user.avatarURL)
+      .setThumbnail(guildMember.user.avatarURL())
       .setColor('#a50008')
       .setFooter(
         'Kitsune',
-        client.user.avatarURL
+        client.user.avatarURL()
       )
       .setTimestamp();
 
