@@ -7,10 +7,13 @@ module.exports = {
       message.client.reply({
         message,
         title: 'Sem permissão.',
-        content: 'Você não tem permissão para executar este comando.\nPermissão necessária: `[KICK_MEMBERS]`.',
+        content:
+          'Você não tem permissão para executar este comando.\nPermissão necessária: `[KICK_MEMBERS]`.',
         time: 10000
       });
-      throw new Error(`${message.author.username} (${message.author.id}) failed to execute the ${command.name} command because he/she has no permission!`);
+      throw new Error(
+        `${message.author.username} (${message.author.id}) failed to execute the ${command.name} command because he/she has no permission!`
+      );
     }
   },
 
@@ -26,17 +29,14 @@ module.exports = {
       });
     }
 
-    const embedPunish = new Discord.RichEmbed()
+    const embedPunish = new Discord.MessageEmbed()
       .setTitle('``🚔`` » Punição')
       .addField('``👤`` **Usuário punido:**', guildMember.user, true)
       .addField('``👮`` **Punido por:**', message.author, true)
       .addField('``📄`` **Tipo:**', 'Expulsão', true)
       .setThumbnail(guildMember.user.avatarURL)
       .setColor('#a50008')
-      .setFooter(
-        'Kitsune',
-        `${client.user.avatarURL}`
-      )
+      .setFooter('Kitsune', `${client.user.avatarURL}`)
       .setTimestamp();
 
     if (reason) {
@@ -44,16 +44,27 @@ module.exports = {
     }
 
     try {
-      await guildMember.send(`\`\`🚔\`\` Você foi expulso do servidor **${message.guild.name}**, mais informações abaixo.`, embedPunish);
-      client.logger.log(`Successfully sent a message to ${guildMember.displayName} with kick details.`);
+      await guildMember.send(
+        `\`\`🚔\`\` Você foi expulso do servidor **${message.guild.name}**, mais informações abaixo.`,
+        embedPunish
+      );
+      client.logger.log(
+        `Successfully sent a message to ${guildMember.displayName} with kick details.`
+      );
     } catch (error) {
-      client.logger.warn(`Failed to send direct message to ${guildMember.displayName} with kick details. ${error}`);
+      client.logger.warn(
+        `Failed to send direct message to ${guildMember.displayName} with kick details. ${error}`
+      );
     }
 
     try {
-      await guildMember.kick(`Motivo: ${reason} | Punido por: ${message.author.tag}`);
+      await guildMember.kick(
+        `Motivo: ${reason} | Punido por: ${message.author.tag}`
+      );
 
-      client.logger.log(`${message.author.username} successfully kicked ${guildMember.displayName} from the server ${message.guild.name}`);
+      client.logger.log(
+        `${message.author.username} successfully kicked ${guildMember.displayName} from the server ${message.guild.name}`
+      );
       message.channel.send('``✅`` Usuário expulso com sucesso.', embedPunish);
     } catch (error) {
       client.reply({
@@ -62,7 +73,9 @@ module.exports = {
         content: 'Não foi possível expulsar este usuário!'
       });
 
-      client.logger.warn(`${message.author.username} failed to kick ${guildMember.displayName} from the server ${message.guild.name}. ${error}`);
+      client.logger.warn(
+        `${message.author.username} failed to kick ${guildMember.displayName} from the server ${message.guild.name}. ${error}`
+      );
     }
   },
 

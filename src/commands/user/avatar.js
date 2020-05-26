@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 
 module.exports = {
   async execute (client, message, args) {
-    const avatarEmbed = new Discord.RichEmbed()
+    const avatarEmbed = new Discord.MessageEmbed()
       .setColor('#a50008');
 
     if (!message.mentions.users.size) {

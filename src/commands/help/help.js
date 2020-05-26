@@ -11,40 +11,36 @@ module.exports = {
         return { name, description, requirePrefix };
       });
 
-      const cmdEmbed = new Discord.RichEmbed()
+      const cmdEmbed = new Discord.MessageEmbed()
         .setTitle('``👨‍💻`` » Comandos')
         .setDescription('Lista de todos os comandos:')
         .setColor('#a50008')
-        .setFooter(
-          'Kitsune',
-          client.user.avatarURL
-        )
+        .setFooter('Kitsune', client.user.avatarURL)
         .setTimestamp();
 
       for (const commandInfo of commandList) {
         if (commandInfo.requirePrefix) {
-          cmdEmbed
-            .addField(`${process.env.PREFIX}${commandInfo.name}`,
-            `**Função**: ${commandInfo.description}`);
+          cmdEmbed.addField(
+            `${process.env.PREFIX}${commandInfo.name}`,
+            `**Função**: ${commandInfo.description}`
+          );
         } else {
           noPrefixCommands.push(commandInfo);
         }
       }
 
-      const noPrefixEmbed = new Discord.RichEmbed()
+      const noPrefixEmbed = new Discord.MessageEmbed()
         .setTitle('``💬`` » Respostas de chat (sem prefixo)')
         .setDescription('Lista de todos os comandos sem prefixo:')
         .setColor('#a50008')
-        .setFooter(
-          'Kitsune',
-          client.user.avatarURL
-        )
+        .setFooter('Kitsune', client.user.avatarURL)
         .setTimestamp();
 
       for (const noPrefixCmd of noPrefixCommands) {
-        noPrefixEmbed
-          .addField(noPrefixCmd.name,
-            `**Função**: ${noPrefixCmd.description}`);
+        noPrefixEmbed.addField(
+          noPrefixCmd.name,
+          `**Função**: ${noPrefixCmd.description}`
+        );
       }
       try {
         await message.author.send(cmdEmbed);
@@ -59,18 +55,25 @@ module.exports = {
           type: 'success'
         });
       } catch (error) {
-        client.logger.error(`Could not send DM with the list of commands to ${message.author.tag}. ${error}`);
+        client.logger.error(
+          `Could not send DM with the list of commands to ${message.author.tag}. ${error}`
+        );
         return client.reply({
           message,
           title: 'Não foi possível te enviar a mensagem.',
-          content: 'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
+          content:
+            'Não foi possível te enviar uma mensagem com os comandos, talvez você esteja com as mensagem diretas desabilitadas. Ou será que... Você me bloqueou? :('
         });
       }
     } else {
-      const commandName = (args.length === 1) ? args[0].toLowerCase() : args.join(' ');
+      const commandName =
+        args.length === 1 ? args[0].toLowerCase() : args.join(' ');
 
-      const command = commands.get(commandName) ||
-        commands.find(cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName));
+      const command =
+        commands.get(commandName) ||
+        commands.find(
+          cmd => cmd.info.aliases && cmd.info.aliases.includes(commandName)
+        );
 
       if (commandName.startsWith(process.env.PREFIX)) {
         return client.reply({
@@ -90,9 +93,17 @@ module.exports = {
 
       const cmdInfo = command.info;
 
-      const cmdEmbed = new Discord.RichEmbed()
-        .setTitle(`\`${(cmdInfo.requirePrefix) ? process.env.PREFIX : ''}${cmdInfo.name}\``)
-        .setDescription(`Informações sobre o comando \`${(cmdInfo.requirePrefix) ? process.env.PREFIX : ''}${cmdInfo.name}\`:`)
+      const cmdEmbed = new Discord.MessageEmbed()
+        .setTitle(
+          `\`${cmdInfo.requirePrefix ? process.env.PREFIX : ''}${
+            cmdInfo.name
+          }\``
+        )
+        .setDescription(
+          `Informações sobre o comando \`${
+            cmdInfo.requirePrefix ? process.env.PREFIX : ''
+          }${cmdInfo.name}\`:`
+        )
         .setColor('#a50008')
         .setFooter(
           `Comando solicitado por: ${message.author.username}`,
@@ -100,12 +111,20 @@ module.exports = {
         )
         .setTimestamp();
 
-      if (cmdInfo.aliases) cmdEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
-      if (cmdInfo.description) cmdEmbed.addField('Descrição', cmdInfo.description);
-      if (cmdInfo.usage) cmdEmbed.addField('Uso', `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`);
+      if (cmdInfo.aliases) {
+        cmdEmbed.addField('Alternativas', cmdInfo.aliases.join(', '));
+      }
+      if (cmdInfo.description) {
+        cmdEmbed.addField('Descrição', cmdInfo.description);
+      }
+      if (cmdInfo.usage) {
+        cmdEmbed.addField(
+          'Uso',
+          `${process.env.PREFIX}${cmdInfo.name} ${cmdInfo.usage}`
+        );
+      }
 
-      cmdEmbed
-        .addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
+      cmdEmbed.addField('Tempo de espera', `${cmdInfo.cooldown || 3} segundos`);
 
       return message.channel.send(cmdEmbed);
     }
@@ -114,7 +133,8 @@ module.exports = {
   get info () {
     return {
       name: 'help',
-      description: 'Lista os comandos disponíveis ou informações sobre um determinado comando.',
+      description:
+        'Lista os comandos disponíveis ou informações sobre um determinado comando.',
       guildOnly: false,
       requireArgs: false,
       requirePrefix: true,

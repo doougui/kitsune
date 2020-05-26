@@ -18,7 +18,7 @@ module.exports = {
       `${randomNude}`
     );
 
-    const nudeEmbed = new Discord.RichEmbed()
+    const nudeEmbed = new Discord.MessageEmbed()
       .setColor('#a50008')
       .setTitle('``🚔`` » Eles estão chegando...')
       .attachFile(imgAttachment)

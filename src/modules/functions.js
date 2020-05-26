@@ -39,19 +39,19 @@ module.exports = async client => {
     // so use index 1.
     const id = matches[1];
 
-    const user = client.users.get(id);
+    const user = client.users.cache.get(id);
 
     return (guildMember && guild) ? guild.member(user) : user;
   };
 
   client.createSilenceRole = async guild => {
-    const newSilenceRole = await guild.createRole({
+    const newSilenceRole = await guild.roles.create({
       name: '🙊 Mutado',
       color: 'GRAY',
       permissions: 0
     });
 
-    const channels = guild.channels;
+    const channels = guild.channels.cache;
 
     channels.forEach(async channel => {
       await channel.overwritePermissions(newSilenceRole, {
@@ -76,7 +76,7 @@ module.exports = async client => {
       throw new Error('Replier type must be either error, warn or success.');
     }
 
-    const replyEmbed = new Discord.RichEmbed()
+    const replyEmbed = new Discord.MessageEmbed()
       .setTitle(`\`\`${emoji}\`\` » ${title}`)
       .setDescription(content)
       .setColor('#a50008')

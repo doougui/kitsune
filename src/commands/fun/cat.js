@@ -7,7 +7,7 @@ module.exports = {
 
     const { file } = await fetch('https://aws.random.cat/meow').then(response => response.json());
 
-    const catEmbed = new Discord.RichEmbed()
+    const catEmbed = new Discord.MessageEmbed()
       .setColor('#a50008')
       .setTitle(`\`\`${client.getRandomItem(cats)}\`\` » Meow`)
       .setImage(file);

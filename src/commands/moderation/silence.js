@@ -15,7 +15,7 @@ module.exports = {
   },
 
   async execute (client, message, args) {
-    let silenceRole = await message.guild.roles.get(process.env.SILENCE_ROLE);
+    let silenceRole = await message.guild.roles.cache.get(process.env.SILENCE_ROLE);
 
     if (!silenceRole) {
       silenceRole = await client.createSilenceRole(message.guild);
@@ -32,7 +32,7 @@ module.exports = {
       });
     }
 
-    const embedPunish = new Discord.RichEmbed()
+    const embedPunish = new Discord.MessageEmbed()
       .setTitle('``🚔`` » Punição')
       .addField('``👤`` **Usuário punido:**', guildMember.user, true)
       .addField('``👮`` **Punido por:**', message.author, true)
