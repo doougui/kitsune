@@ -64,20 +64,16 @@ module.exports = async client => {
 
   // TO-DO: substituir message por channel e author
   client.reply = async ({ message, title, content, time = 0, type = 'error' }) => {
-    let emoji = '';
+    const emojis = {
+      error: '❌',
+      warn: '⚠️',
+      success: '✅'
+    };
 
-    switch (type) {
-      case 'error':
-        emoji = '❌';
-        break;
-      case 'warn':
-        emoji = '⚠️';
-        break;
-      case 'success':
-        emoji = '✅';
-        break;
-      default:
-        throw new TypeError('Replier type must be either error, warn or success.');
+    const emoji = emojis[type];
+
+    if (!emoji) {
+      throw new Error('Replier type must be either error, warn or success.');
     }
 
     const replyEmbed = new Discord.RichEmbed()
