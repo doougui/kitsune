@@ -7,7 +7,7 @@ module.exports = async (client, message) => {
 
   message.content = message.content.toLowerCase();
 
-  if (message.channel.id === process.env.SUGGESTION_CHAT) {
+  if (message.channel.name === '📝・sugestões') {
     message.react('✅');
     message.react('❌');
   }
