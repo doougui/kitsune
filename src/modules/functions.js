@@ -2,7 +2,7 @@
 
 const Discord = require('discord.js');
 
-module.exports = async client => {
+module.insexports = async client => {
   client.getRandomItem = itens => {
     return itens[Math.floor(Math.random() * itens.length)];
   };
