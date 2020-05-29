@@ -57,10 +57,9 @@ module.exports = async client => {
     const channels = guild.channels.cache;
 
     channels.forEach(async channel => {
-      await channel.overwritePermissions([{
-        id: newSilenceRole,
-        deny: ['SEND_MESSAGES']
-      }], 'Impossibilita o usuário mutado de enviar mensagens.');
+      await channel.updateOverwrite(newSilenceRole, {
+        SEND_MESSAGES: false
+      });
     });
 
     return newSilenceRole;
