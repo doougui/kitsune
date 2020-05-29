@@ -1,7 +1,8 @@
 module.exports = async (client, guild) => {
   client.logger.log(`I've joined the server ${guild.name}.`);
 
-  const channel = client.getChannel({ guild, channelId: process.env.WELCOME_CHAT });
+  const channel = guild.channels.cache.find(ch => ch.name === '👥・bem-vindo');
+  if (!channel) return;
   const emojiNum = client.convertNumberIntoEmoji(guild.memberCount);
 
   channel.edit({

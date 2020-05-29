@@ -3,16 +3,6 @@
 const Discord = require('discord.js');
 
 module.exports = async client => {
-  client.getChannel = ({ member, guild, channelId }) => {
-    const channel = (member)
-      ? member.guild.channels.cache.find(ch => ch.id === channelId)
-      : guild.channels.cache.find(ch => ch.id === channelId); ;
-
-    if (!channel) return;
-
-    return channel;
-  };
-
   client.getRandomItem = itens => {
     return itens[Math.floor(Math.random() * itens.length)];
   };
