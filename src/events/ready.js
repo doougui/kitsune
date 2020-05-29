@@ -3,7 +3,7 @@ module.exports = async client => {
 
   client.user.setPresence({
     activity: {
-      name: 'você | $help',
+      name: `${process.env.PREFIX}help in ${client.guilds.cache.size} servers!`,
       type: 'LISTENING'
     },
     status: 'dnd'

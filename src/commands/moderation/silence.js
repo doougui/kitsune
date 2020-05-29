@@ -15,7 +15,7 @@ module.exports = {
   },
 
   async execute (client, message, args) {
-    let silenceRole = await message.guild.roles.cache.get(process.env.SILENCE_ROLE);
+    let silenceRole = await message.guild.roles.cache.find(role => role.name === '🙊 Mutado');
 
     if (!silenceRole) {
       silenceRole = await client.createSilenceRole(message.guild);
@@ -51,7 +51,7 @@ module.exports = {
     }
 
     try {
-      if (guildMember.roles.has(silenceRole.id)) {
+      if (guildMember.roles.cache.has(silenceRole.id)) {
         client.reply({
           message,
           title: 'Impossível silenciar.',
@@ -61,7 +61,7 @@ module.exports = {
         return client.logger.warn(`${message.author.username} failed to silence ${guildMember.displayName} on the server ${message.guild.name} because this user is already silenced.`);
       }
 
-      await guildMember.addRole(silenceRole, reason);
+      await guildMember.roles.add(silenceRole, reason);
 
       client.logger.log(`${message.author.username} successfully silenced ${guildMember.displayName} on the server ${message.guild.name}`);
       message.channel.send('``✅`` Usuário silenciado com sucesso.', embedPunish);

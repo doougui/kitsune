@@ -5,8 +5,8 @@ const Discord = require('discord.js');
 module.exports = async client => {
   client.getChannel = ({ member, guild, channelId }) => {
     const channel = (member)
-      ? member.guild.channels.find(ch => ch.id === channelId)
-      : guild.channels.find(ch => ch.id === channelId); ;
+      ? member.guild.channels.cache.find(ch => ch.id === channelId)
+      : guild.channels.cache.find(ch => ch.id === channelId); ;
 
     if (!channel) return;
 
@@ -46,17 +46,21 @@ module.exports = async client => {
 
   client.createSilenceRole = async guild => {
     const newSilenceRole = await guild.roles.create({
-      name: '🙊 Mutado',
-      color: 'GRAY',
-      permissions: 0
+      data: {
+        name: '🙊 Mutado',
+        color: 'GRAY',
+        permissions: 0
+      },
+      reason: 'Cargo atribuido a usuários mutados.'
     });
 
     const channels = guild.channels.cache;
 
     channels.forEach(async channel => {
-      await channel.overwritePermissions(newSilenceRole, {
-        SEND_MESSAGES: false
-      });
+      await channel.overwritePermissions([{
+        id: newSilenceRole,
+        deny: ['SEND_MESSAGES']
+      }], 'Impossibilita o usuário mutado de enviar mensagens.');
     });
 
     return newSilenceRole;
@@ -89,7 +93,7 @@ module.exports = async client => {
     try {
       const msg = await message.channel.send(message.author, replyEmbed);
       if (time === 0) return;
-      msg.delete(time);
+      msg.delete({ timeout: time });
     } catch (error) {
       message.client.logger.warn(`Failed to send a reply message to ${message.author.username}. ${error}`);
     }

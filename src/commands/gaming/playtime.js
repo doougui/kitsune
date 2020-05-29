@@ -104,7 +104,7 @@ module.exports = {
       guildOnly: false,
       requireArgs: true,
       requirePrefix: true,
-      usage: '<jogo> (limite de 18 resultados)',
+      usage: '<jogo> (limite de 20 resultados)',
       cooldown: 3,
       aliases: ['gametime', 'howlong', 'howlongtobeat']
     };
