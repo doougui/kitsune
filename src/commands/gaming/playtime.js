@@ -32,8 +32,6 @@ module.exports = {
       gamesString.push(`**${item.index}** | ${item.name}`)
     );
 
-    // return console.log(gamesList[0].id);
-
     const gameListEmbed = new Discord.MessageEmbed()
       .setTitle('``🎮`` » Lista de jogos encontrados')
       .addField('Escolha um jogo digitando seu número', gamesString, true)

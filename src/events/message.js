@@ -26,6 +26,8 @@ module.exports = async (client, message) => {
 
   const cmdInfo = command.info;
 
+  if (cmdInfo.requirePrefix && !message.content.startsWith(process.env.PREFIX)) return;
+
   client.logger.cmd(`${message.author.username} (${message.author.id}) executed the "${cmdInfo.name}" command.`);
 
   // Check if command is 'server only' (can't be executed inside DMs)
