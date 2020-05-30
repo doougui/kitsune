@@ -13,7 +13,7 @@ module.exports = {
 
     const randomNude = client.getRandomItem(nudes);
 
-    const imgAttachment = new Discord.Attachment(
+    const imgAttachment = new Discord.MessageAttachment(
       `./assets/img/nude/${randomNude}`,
       `${randomNude}`
     );
@@ -21,7 +21,7 @@ module.exports = {
     const nudeEmbed = new Discord.MessageEmbed()
       .setColor('#a50008')
       .setTitle('``🚔`` » Eles estão chegando...')
-      .attachFile(imgAttachment)
+      .attachFiles([imgAttachment])
       .setImage(`attachment://${randomNude}`);
 
     message.channel.send(nudeEmbed);
