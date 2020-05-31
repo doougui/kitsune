@@ -19,6 +19,7 @@
   "author": "Douglas Pinheiro Goulart",
   "license": "MIT",
   "dependencies": {
+    "@strdr4605/mockingcase": "^1.10.5",
     "chalk": "^2.4.2",
     "discord.js": "^12.2.0",
     "dotenv": "^8.2.0",

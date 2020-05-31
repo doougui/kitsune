@@ -1,8 +1,6 @@
-/* eslint-disable no-unused-expressions */
-
 const Discord = require('discord.js');
 
-module.insexports = async client => {
+module.exports = async client => {
   client.getRandomItem = itens => {
     return itens[Math.floor(Math.random() * itens.length)];
   };
