@@ -19,7 +19,7 @@ module.exports = {
 
   async execute (client, message, args) {
     const guildMember = client.getUserFromMention(args[0], message.guild, true);
-    const reason = args.slice(1).join(' ');
+    let reason = args.slice(1).join(' ');
 
     if (!guildMember) {
       return client.reply({
@@ -59,9 +59,9 @@ module.exports = {
     }
 
     try {
-      await guildMember.ban({ days: 7, reason });
+      reason = `${reason} | Punido por: ${message.author.tag}`;
 
-      // `Motivo: ${reason} | Punido por: ${message.author.tag}`
+      await guildMember.ban({ days: 7, reason });
 
       client.logger.log(
         `${message.author.username} successfully banned ${guildMember.displayName} from the server ${message.guild.name}`
