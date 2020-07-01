@@ -59,9 +59,9 @@ module.exports = {
     }
 
     try {
-      await guildMember.ban(
-        `Motivo: ${reason} | Punido por: ${message.author.tag}`
-      );
+      await guildMember.ban({ days: 7, reason });
+
+      // `Motivo: ${reason} | Punido por: ${message.author.tag}`
 
       client.logger.log(
         `${message.author.username} successfully banned ${guildMember.displayName} from the server ${message.guild.name}`
