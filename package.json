@@ -25,7 +25,9 @@
     "dotenv": "^8.2.0",
     "howlongtobeat": "^1.1.1",
     "moment": "^2.24.0",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "sequelize": "^6.3.4",
+    "sqlite3": "^5.0.0"
   },
   "devDependencies": {
     "eslint": "^7.1.0",
