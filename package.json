@@ -4,7 +4,8 @@
   "description": "Cool bot for Discord servers",
   "main": "./src/index.js",
   "scripts": {
-    "start": "node .",
+    "start": "nodemon .",
+    "dev": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
@@ -26,6 +27,7 @@
     "howlongtobeat": "^1.1.1",
     "moment": "^2.24.0",
     "node-fetch": "^2.6.0",
+    "nodemon": "^2.0.4",
     "sequelize": "^6.3.4",
     "sqlite3": "^5.0.0"
   },
