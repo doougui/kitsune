@@ -27,7 +27,7 @@ module.exports = async (client, guild) => {
     if (!server[0].dataValues.welcome_channel) return;
     channel = guild.channels.cache.find(ch => ch.id === server[0].dataValues.welcome_channel);
   } catch (error) {
-    return client.logger.error(`Something went wrong with adding a server. ${error}`);
+    return client.logger.error(`Something went wrong when adding a server. ${error}`);
   }
 
   channel.send('Salve!');
